@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using Core.Match.Player;
+using Core.Units.Player;
 using Zenject;
 
 namespace Core.Factories

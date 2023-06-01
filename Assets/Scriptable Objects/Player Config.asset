@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 458ed2e45a11de34f89c7c03dda5bb5f, type: 3}
   m_Name: Player Config
   m_EditorClassIdentifier: 
-  <PrefabPath>k__BackingField: Prefabs/Ghost
-  <MaxHealth>k__BackingField: 100
-  <MovementSpeed>k__BackingField: 7
-  <RotationSpeed>k__BackingField: 0.1
-  <JumpForce>k__BackingField: 1
+  <DisplayName>k__BackingField: 
+  <Description>k__BackingField: 
+  <Health>k__BackingField: 0
+  <Velocity>k__BackingField: 4.4
+  <ReloadTime>k__BackingField: 0
+  <Prefab>k__BackingField: {fileID: 923292189166733468, guid: 7190408dea19d0d4a95c6396c41c7c20, type: 3}

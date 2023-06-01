@@ -1,5 +1,5 @@
 using Zenject;
-using Core.Factories;
+using Core.Services.Input;
 
 namespace Core.Infrastructure.Installers
 {
@@ -7,7 +7,7 @@ namespace Core.Infrastructure.Installers
     {
         public override void InstallBindings()
         {
-            
+         
         }
     }
 }

@@ -1,5 +1,7 @@
 using Zenject;
 using Core.Factories;
+using Core.Services.Input;
+using Core.UI;
 
 namespace Core.Infrastructure.Installers
 {
@@ -7,7 +9,20 @@ namespace Core.Infrastructure.Installers
     {
         public override void InstallBindings()
         {
-            Container.Bind<IPlayerFactory>().To<UnityPlayerFactory>().AsSingle();
+            Container.BindInterfacesAndSelfTo<Level>().AsSingle().NonLazy();
+
+            BindFactories();
+            BindInput();
+        }
+        private void BindInput()
+        {
+            Container.Bind<JoystickHandler>().FromComponentInHierarchy().AsSingle();
+            Container.Bind<IInputService>().To<JoystickInput>().AsSingle().NonLazy();
+        }
+        private void BindFactories()
+        {
+            Container.BindInterfacesAndSelfTo<PlayerFactory>().AsSingle();
+            //Container.Bind<IEnemyFactory>().To<EnemyFactory>().AsSingle();
         }
     }
 }

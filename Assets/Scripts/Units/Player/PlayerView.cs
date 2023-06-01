@@ -1,41 +1,33 @@
 ﻿using UnityEngine;
 
-namespace Core.Match.Player
+namespace Core.Units.Player
 {
     public class PlayerView : MonoBehaviour, ITransformable
     {
         [SerializeField]
         private Rigidbody2D _rigidbody;
 
-        private Camera _mainCamera;
         private Vector2 _animationBlend;
 
         public Transform Transform => transform;
-        public Vector3 Position => transform.position;
+        public Vector2 Position => transform.position;
         public Quaternion Rotation => transform.rotation;
 
-        private void Start()
-        {
-            _mainCamera = Camera.main;
-        }
-        public Vector3 CalculateWorldDirection(Vector2 inputDirection)
-        {
-            Vector3 direction = new Vector3(inputDirection.x, 0f, inputDirection.y);
-            Vector3 worldDirection = _mainCamera.transform.TransformDirection(direction);
-            worldDirection.y = 0;
-            return worldDirection.normalized;
-        }
-        public void Translate(Vector3 worldDirection, float movementSpeed)
+        public void Translate(Vector2 worldDirection, float movementSpeed)
         {
             _rigidbody.velocity = worldDirection * movementSpeed;
         }
-        public void SetPosition(Vector3 worldPosition)
+        public void SetPosition(Vector2 worldPosition)
         {
             transform.position = worldPosition;
         }
-        public void Rotate(Quaternion rotation)
+        public void SetDirection(bool flipX)
         {
-            transform.rotation = rotation;
+            float currentXScaleValue = Mathf.Abs(transform.localScale.x);
+            
+            Vector3 localScale = transform.localScale;
+            localScale.x = currentXScaleValue * (flipX ? 1f : -1f);
+            transform.localScale = localScale;
         }
         public void SetRunningAnimation(bool isMoving, Vector2 inputDirection)
         {

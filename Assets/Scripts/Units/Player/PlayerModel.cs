@@ -2,7 +2,7 @@
 using Core.Models;
 using Core.Services.Input;
 
-namespace Core.Match.Player
+namespace Core.Units.Player
 {
     public class PlayerModel
     {
@@ -16,7 +16,7 @@ namespace Core.Match.Player
         public PlayerModel(PlayerConfig config, IInputService inputService)
         {
             Config = config;
-            Health = config.MaxHealth;
+            Health = config.Health;
             InputService = inputService;
         }
 

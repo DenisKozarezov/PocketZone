@@ -2,9 +2,9 @@ using System;
 using UnityEngine;
 using Zenject;
 
-namespace Core.Match.Player
+namespace Core.Units.Player
 {
-    public sealed class PlayerController : ITickable, IDisposable
+    public sealed class PlayerController : IUnit, ITickable, IDisposable
     {
         private readonly PlayerModel _model;
         private readonly PlayerView _view;
@@ -20,20 +20,13 @@ namespace Core.Match.Player
         }
         private void ProcessMovementInput(Vector2 inputDirection)
         {
-            if (inputDirection == Vector2.zero)
-                return;
+            _view.Translate(inputDirection, _model.Config.Velocity);
 
-            Vector3 worldDirection = _view.CalculateWorldDirection(inputDirection);
-
-            _view.Translate(inputDirection, _model.Config.MovementSpeed);
-
-            Vector3 localDirection = _view.Position + worldDirection;
-            localDirection.y = _view.Position.y;
-
-            Quaternion toRotation = Quaternion.LookRotation(localDirection - _view.Position, Vector3.up);
-            Quaternion rotation = Quaternion.Slerp(_view.Rotation, toRotation, Time.deltaTime / _model.Config.RotationSpeed);
-
-            _view.Rotate(rotation);
+            float horizontal = inputDirection.x;
+            if (horizontal != 0f && _view.Rotation.eulerAngles.x != horizontal)
+            {
+                _view.SetDirection(horizontal >= 0f);
+            }
         }
         public void Enable()
         {
@@ -46,11 +39,15 @@ namespace Core.Match.Player
         public void Tick()
         {
             ProcessMovementInput(_model.InputService.Direction);
-            _view.SetRunningAnimation(_model.InputService.IsMoving, _model.InputService.Direction);
+            //_view.SetRunningAnimation(_model.InputService.IsMoving, _model.InputService.Direction);
         }
         public void Dispose()
         {
             Disable();
+        }
+        public void Hit(int damage)
+        {
+            throw new NotImplementedException();
         }
     }
 }

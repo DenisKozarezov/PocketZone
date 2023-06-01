@@ -1,18 +1,18 @@
 ﻿using System;
 using UnityEngine;
 using Zenject;
-using Core.Match.Player;
+using Core.Units.Player;
 using Core.Models;
 
 namespace Core.Factories
 {
-    public class UnityPlayerFactory : IPlayerFactory, ITickable, IDisposable
+    public class PlayerFactory : IPlayerFactory, ITickable, IDisposable
     {
         private readonly DiContainer _container;
         private readonly PlayerConfig _config;
         private PlayerController _playerController;
 
-        public UnityPlayerFactory(DiContainer container, PlayerConfig config)
+        public PlayerFactory(DiContainer container, PlayerConfig config)
         {
             _container = container;
             _config = config;
