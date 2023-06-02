@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a73975951fe35d4885259c20143af55, type: 3}
+  m_Name: Zombie Config
+  m_EditorClassIdentifier: 
+  <DisplayName>k__BackingField: Zombie
+  <Description>k__BackingField: 
+  <Health>k__BackingField: 50
+  <Velocity>k__BackingField: 2
+  <AttackRange>k__BackingField: 3
+  <ReloadTime>k__BackingField: 3
+  <Prefab>k__BackingField: {fileID: 5878201393306676278, guid: 4e32d3acb90aca3408c21ec19fb4d7c0, type: 3}
+  <AggressionRadius>k__BackingField: 3
+  <PatrolRadius>k__BackingField: 3

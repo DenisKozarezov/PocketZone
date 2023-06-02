@@ -99,6 +99,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rigidbody: {fileID: 553102643775798135}
+  _characterCenter: {fileID: 8751861153359863211}
+  _weaponHolder: {fileID: 6296550784174605840}
 --- !u!1 &1165340569539329017
 GameObject:
   m_ObjectHideFlags: 0
@@ -327,9 +329,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27df96221e62366439cdf235dcf92c9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _radius: 5
   _lineWidth: 0.03
   _lineColor: {r: 1, g: 1, b: 1, a: 0.24705882}
+  _parent: {fileID: 8751861153359863211}
 --- !u!1 &1496419495833678498
 GameObject:
   m_ObjectHideFlags: 0
@@ -437,7 +439,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -500567205
   m_SortingLayer: 4
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 442fe9fca83525949b065b4f11cb28a6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -606,7 +608,7 @@ SpriteRenderer:
   m_SortingLayerID: -500567205
   m_SortingLayer: 4
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 4cef83b301511e047a3c742898d0ad01, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7e8aa38e1fe5c1243a9b498171835b72, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

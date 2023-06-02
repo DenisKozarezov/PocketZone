@@ -11,6 +11,7 @@ namespace Core.Models.Units
         [field: SerializeField, TextArea] public string Description { get; private set; }
         [field: Space, SerializeField, Min(1)] public int Health { get; private set; }
         [field: SerializeField, Range(0f, 50f)] public float Velocity { get; private set; }
+        [field: SerializeField, Range(0f, 8f)] public float AttackRange { get; private set; }
         [field: SerializeField, Range(0f, 5f)] public float ReloadTime { get; private set; }
         [field: Space, SerializeField] public GameObject Prefab { get; private set; }
 

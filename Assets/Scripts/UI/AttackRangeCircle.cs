@@ -6,20 +6,19 @@ namespace Core.UI
     public class AttackRangeCircle : MonoBehaviour
     {
         [SerializeField]
-        private float _radius;
-        [SerializeField]
         private float _lineWidth = 0.01f;
         [SerializeField]
         private Color _lineColor = Color.white;
+        [SerializeField]
+        private Transform _parent;
 
         private LineRenderer _renderer;
-        private Transform _parent;
+        private float _radius;
         private const byte Segments = 100;
 
         private void Awake()
         {
             _renderer = GetComponent<LineRenderer>();
-            _parent = transform.parent;
             _renderer.positionCount = Segments + 1;
             _renderer.startWidth = _renderer.endWidth = _lineWidth;
             _renderer.startColor = _renderer.endColor = _lineColor;
@@ -34,7 +33,6 @@ namespace Core.UI
                 _renderer.SetPosition(i, _parent.position + new Vector3(sin, cos));
             }
         }
-
         public void SetRadius(float radius) 
         {
             _radius = radius;

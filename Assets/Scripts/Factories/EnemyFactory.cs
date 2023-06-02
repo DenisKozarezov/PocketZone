@@ -27,20 +27,15 @@ namespace Core.Factories
         {
             EnemyView view = _container.InstantiatePrefabForComponent<EnemyView>(_enemySettings.EnemyConfig.Prefab);
             EnemyModel model = new EnemyModel(
-                5,
-                5,
-                _enemySettings.AggressionRadius,
-                _enemySettings.PatrolRadius,
-                5);
+                _enemySettings.EnemyConfig.ReloadTime,
+                _enemySettings.EnemyConfig.Velocity,
+                _enemySettings.EnemyConfig.AggressionRadius,
+                _enemySettings.EnemyConfig.PatrolRadius,
+                _enemySettings.EnemyConfig.Health);
             EnemyController controller = new EnemyController(model, view);
 
             view.SetActive(false);
-            //view.GetComponent<ContactCollider>().Owner = controller;
 
-            //BulletGunModel bulletGunModel = new BulletGunModel(model.ReloadTime, _weaponSettings.BulletGunConfig, view.FirePoint, BulletType.Enemy);
-            //BulletGun bulletGun = _container.Instantiate<BulletGun>(new object[] { bulletGunModel });
-
-            //controller.SetPrimaryWeapon(bulletGun);
             _pool.Enqueue(controller);
             return controller;
         }

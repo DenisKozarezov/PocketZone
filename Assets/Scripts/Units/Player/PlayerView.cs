@@ -6,10 +6,14 @@ namespace Core.Units.Player
     {
         [SerializeField]
         private Rigidbody2D _rigidbody;
+        [SerializeField]
+        private Transform _characterCenter;
+        [SerializeField]
+        private Transform _weaponHolder;
 
         private Vector2 _animationBlend;
 
-        public Transform Transform => transform;
+        public Transform Transform => _characterCenter;
         public Vector2 Position => transform.position;
         public Quaternion Rotation => transform.rotation;
 
@@ -28,6 +32,10 @@ namespace Core.Units.Player
             Vector3 localScale = transform.localScale;
             localScale.x = currentXScaleValue * (flipX ? 1f : -1f);
             transform.localScale = localScale;
+        }
+        public void RotateWeapon(Quaternion rotation)
+        {
+            _weaponHolder.rotation = rotation;
         }
         public void SetRunningAnimation(bool isMoving, Vector2 inputDirection)
         {

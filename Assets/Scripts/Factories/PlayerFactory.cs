@@ -3,6 +3,7 @@ using UnityEngine;
 using Zenject;
 using Core.Units.Player;
 using Core.Models;
+using Core.UI;
 
 namespace Core.Factories
 {
@@ -23,6 +24,9 @@ namespace Core.Factories
             PlayerView view = obj.GetComponent<PlayerView>();
             PlayerModel model = _container.Instantiate<PlayerModel>(new object[] { _config });
             
+            var attackRange = view.GetComponentInChildren<AttackRangeCircle>();
+            attackRange.SetRadius(model.Config.AttackRange);
+
             PlayerController controller = new PlayerController(model, view);
             controller.Transformable.SetPosition(position);
             _playerController = controller;

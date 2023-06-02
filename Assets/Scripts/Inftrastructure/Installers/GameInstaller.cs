@@ -1,4 +1,5 @@
 using Zenject;
+using Cinemachine;
 using Core.Factories;
 using Core.Services.Input;
 using Core.UI;
@@ -10,6 +11,7 @@ namespace Core.Infrastructure.Installers
         public override void InstallBindings()
         {
             Container.BindInterfacesAndSelfTo<Level>().AsSingle().NonLazy();
+            Container.Bind<ICinemachineCamera>().To<CinemachineVirtualCamera>().FromComponentInHierarchy().AsSingle();
 
             BindFactories();
             BindInput();
@@ -22,7 +24,7 @@ namespace Core.Infrastructure.Installers
         private void BindFactories()
         {
             Container.BindInterfacesAndSelfTo<PlayerFactory>().AsSingle();
-            //Container.Bind<IEnemyFactory>().To<EnemyFactory>().AsSingle();
+            Container.Bind<IEnemyFactory>().To<EnemyFactory>().AsSingle();
         }
     }
 }

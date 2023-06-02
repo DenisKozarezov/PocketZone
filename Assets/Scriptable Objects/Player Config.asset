@@ -9,12 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 458ed2e45a11de34f89c7c03dda5bb5f, type: 3}
+  m_Script: {fileID: 11500000, guid: d1c3a6641659e27429508858666a99f5, type: 3}
   m_Name: Player Config
   m_EditorClassIdentifier: 
-  <DisplayName>k__BackingField: 
+  <DisplayName>k__BackingField: Player
   <Description>k__BackingField: 
-  <Health>k__BackingField: 0
-  <Velocity>k__BackingField: 4.4
-  <ReloadTime>k__BackingField: 0
+  <Health>k__BackingField: 100
+  <Velocity>k__BackingField: 3
+  <AttackRange>k__BackingField: 2.5
+  <ReloadTime>k__BackingField: 3
   <Prefab>k__BackingField: {fileID: 923292189166733468, guid: 7190408dea19d0d4a95c6396c41c7c20, type: 3}

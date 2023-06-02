@@ -11,12 +11,6 @@ namespace Core.Models
     {
         public EnemyConfig EnemyConfig;
         public byte EnemiesLimit;
-        [Min(0f)]
-        public float EnemiesSpawnTime;
-        [Min(0f)]
-        public float AggressionRadius;
-        [Min(0f)]
-        public float PatrolRadius;
     }
 }
 

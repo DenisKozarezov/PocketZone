@@ -25,8 +25,14 @@ namespace Core.Units.Player
             float horizontal = inputDirection.x;
             if (horizontal != 0f && _view.Rotation.eulerAngles.x != horizontal)
             {
-                _view.SetDirection(horizontal >= 0f);
+                _view.SetDirection(horizontal > 0f);
             }
+
+
+            float angle = Mathf.Atan2(inputDirection.y, inputDirection.x) * Mathf.Rad2Deg;
+            angle += inputDirection.x >= 0f ? 0f : 180f;
+            Quaternion rotation = Quaternion.Euler(new Vector3(0f, 0f, angle));
+            _view.RotateWeapon(rotation);
         }
         public void Enable()
         {
