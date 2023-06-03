@@ -6,7 +6,7 @@ namespace Core.Models
     [CreateAssetMenu(menuName = "Configuration/Player Config")]
     public sealed class PlayerConfig : UnitConfig
     {
-        public readonly float VerticalRotationMin = -30f;
-        public readonly float VerticalRotationMax = 0f;
+        [field: Header("Player Characteristics")]
+        [field: SerializeField] public BulletGunConfig PrimaryWeapon { get; set; }
     }
 }

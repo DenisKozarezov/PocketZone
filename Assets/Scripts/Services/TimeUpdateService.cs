@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Zenject;
 
-namespace Core
+namespace Core.Services
 {
     public class TimeUpdateService : IFixedTickable, ITickable
     {

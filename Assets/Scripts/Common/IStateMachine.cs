@@ -6,7 +6,6 @@ namespace Core
         void Exit();
         void Update();
     }
-
     public interface IStateMachine<T> where T : class
     {
         T Context { get; }

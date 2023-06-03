@@ -12,8 +12,11 @@ namespace Core.Units.Player
         [SerializeField]
         private Transform _weaponHolder;
         [SerializeField]
+        private Transform _firePoint;
+        [SerializeField]
         private AttackRangeCircle _attackRangeCircle;
 
+        public Transform FirePoint => _firePoint;
         public Transform Transform => _characterCenter;
         public Vector2 Position => transform.position;
         public Quaternion Rotation => transform.rotation;
@@ -39,9 +42,9 @@ namespace Core.Units.Player
         {
             _attackRangeCircle.SetAngle(angle);
 
-            if (angle > 90f && angle < 180f)
-                angle = 180f + Mathf.Abs(angle);
-            else if (angle >= -180f && angle <= -90f)
+            if (angle > 90f)
+                angle = 180f + angle;
+            else if (angle <= -90f)
                 angle = angle - 180f;
 
             _weaponHolder.rotation = Quaternion.AngleAxis(angle, Vector3.forward);

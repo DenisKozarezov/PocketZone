@@ -3,7 +3,6 @@ using Cinemachine;
 using Zenject;
 using Core.Factories;
 using Core.Units.Player;
-using Core.Units.Enemy;
 
 namespace Core
 {

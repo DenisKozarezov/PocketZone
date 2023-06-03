@@ -1,17 +1,19 @@
+using System;
 using UnityEngine;
 using Core.UI;
 using Zenject;
 
 namespace Core.Services.Input
 {
-    public sealed class JoystickInput : IInputService, IInitializable, ILateDisposable
+    public sealed class MobilePlatformInput : IInputService, IInitializable, IDisposable
     {
         private readonly PlayerControls _playerControls;
         private readonly JoystickHandler _joystick;
         public bool IsMoving => _joystick.IsDragging;
         public Vector2 Direction => _joystick.Direction;
+        public event Action Fire;
 
-        public JoystickInput(JoystickHandler joystick)
+        public MobilePlatformInput(JoystickHandler joystick)
         {
             _playerControls = new PlayerControls();
             _joystick = joystick;
@@ -21,6 +23,6 @@ namespace Core.Services.Input
         public void Enable() => _playerControls.Enable();
 
         public void Initialize() => Enable();
-        public void LateDispose() => Disable();
+        public void Dispose() => Disable();
     }
 }

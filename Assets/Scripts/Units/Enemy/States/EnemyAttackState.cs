@@ -13,7 +13,7 @@ namespace Core.Units.Enemy
         public EnemyAttackState(IStateMachine<EnemyController> stateMachine, EnemyModel model) : base(stateMachine)
         {
             _velocity = model.Velocity;
-            _reloadTime = model.ReloadTime;
+            _reloadTime = model.AttackCooldown;
             _attackDistance = model.AggressionRadius;
         }
         private bool IsCloseToTarget(out Vector2 direction)

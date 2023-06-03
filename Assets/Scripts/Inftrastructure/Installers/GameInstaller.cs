@@ -1,6 +1,7 @@
 using Zenject;
 using Cinemachine;
 using Core.Factories;
+using Core.Services;
 using Core.Services.Input;
 using Core.UI;
 
@@ -21,7 +22,7 @@ namespace Core.Infrastructure.Installers
         private void BindInput()
         {
             Container.Bind<JoystickHandler>().FromComponentInHierarchy().AsSingle();
-            Container.Bind<IInputService>().To<JoystickInput>().AsSingle().NonLazy();
+            Container.Bind<IInputService>().To<MobilePlatformInput>().AsSingle().NonLazy();
         }
         private void BindFactories()
         {

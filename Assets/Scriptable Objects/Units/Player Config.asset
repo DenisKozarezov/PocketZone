@@ -17,5 +17,5 @@ MonoBehaviour:
   <Health>k__BackingField: 100
   <Velocity>k__BackingField: 3
   <AttackRange>k__BackingField: 3
-  <ReloadTime>k__BackingField: 3
   <Prefab>k__BackingField: {fileID: 923292189166733468, guid: 7190408dea19d0d4a95c6396c41c7c20, type: 3}
+  <PrimaryWeapon>k__BackingField: {fileID: 11400000, guid: 82277ff30ad3cdb45a18e2572c4cd222, type: 2}

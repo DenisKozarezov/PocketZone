@@ -1,5 +1,6 @@
 ﻿using Core.Models;
 using Core.Services.Input;
+using Core.Weapons;
 
 namespace Core.Units.Player
 {
@@ -7,8 +8,9 @@ namespace Core.Units.Player
     {
         public readonly PlayerConfig Config;
         public readonly IInputService InputService;
+        public IWeapon PrimaryWeapon { get; set; }
 
-        public PlayerModel(PlayerConfig config, IInputService inputService) : base(config.Health)
+        public PlayerModel(PlayerConfig config, IInputService inputService) : base(config)
         {
             Config = config;
             InputService = inputService;

@@ -1,3 +1,4 @@
+using Core.Weapons;
 using System;
 using UnityEngine;
 using Zenject;
@@ -38,6 +39,18 @@ namespace Core.Units.Player
             float angle = Mathf.Atan2(inputDirection.y, inputDirection.x) * Mathf.Rad2Deg;
             _view.RotateWeapon(angle);
         }
+        private void BindWeapon()
+        {
+            if (_model.PrimaryWeapon == null) return;
+
+            _model.InputService.Fire += _model.PrimaryWeapon.Shoot;
+        }
+        private void UnbindWeapon()
+        {
+            if (_model.PrimaryWeapon == null) return;
+
+            _model.InputService.Fire -= _model.PrimaryWeapon.Shoot;
+        }
         public void Enable()
         {
             _model.InputService.Enable();
@@ -46,6 +59,18 @@ namespace Core.Units.Player
         {
             _model.InputService.Disable();
         }
+        public void SetPrimaryWeapon(IWeapon weapon)
+        {
+            if (weapon == null) 
+                throw new ArgumentNullException("Weapon is null!");
+
+            UnbindWeapon();
+
+            _model.PrimaryWeapon = weapon;
+
+            BindWeapon();
+        }
+        public void Hit(int damage) => _model.Hit(damage);
         public void FixedTick()
         {
             if (_model.Dead)
@@ -53,6 +78,5 @@ namespace Core.Units.Player
 
             ProcessMovementInput(_model.InputService.Direction);
         }
-        public void Hit(int damage) => _model.Hit(damage);
     }
 }

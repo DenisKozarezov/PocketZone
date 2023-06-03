@@ -17,7 +17,14 @@ MonoBehaviour:
   <Health>k__BackingField: 50
   <Velocity>k__BackingField: 2
   <AttackRange>k__BackingField: 3
-  <ReloadTime>k__BackingField: 3
   <Prefab>k__BackingField: {fileID: 5878201393306676278, guid: 4e32d3acb90aca3408c21ec19fb4d7c0, type: 3}
+  <AttackCooldown>k__BackingField: 2
   <AggressionRadius>k__BackingField: 3
   <PatrolRadius>k__BackingField: 3
+  <Reward>k__BackingField:
+  - Item: {fileID: 0}
+    Probability: 0.757
+  - Item: {fileID: 0}
+    Probability: 0.239
+  - Item: {fileID: 0}
+    Probability: 0.54

@@ -5,6 +5,7 @@ using Zenject;
 using Core.Models;
 using Core.Units.Enemy;
 using Core.UI;
+using Core.Services;
 
 namespace Core.Factories
 {
@@ -14,7 +15,7 @@ namespace Core.Factories
         private readonly EnemySettings _enemySettings;
         private readonly Queue<EnemyController> _pool;
         private readonly HealthBarManager _healthBarManager;
-        private readonly TimeUpdateService _timeUpdate;
+        private readonly TimeUpdateService _timeUpdater;
         public bool Empty => _pool.Count == 0;
 
         public EnemyFactory(
@@ -27,22 +28,17 @@ namespace Core.Factories
             _enemySettings = enemySettings;
             _pool = new Queue<EnemyController>(enemySettings.EnemiesLimit);
             _healthBarManager = healthBarManager;
-            _timeUpdate = timeUpdate;
+            _timeUpdater = timeUpdate;
 
             for (int i = 0; i < enemySettings.EnemiesLimit; i++) Create();
         }
         private EnemyController Create()
         {
             EnemyView view = _container.InstantiatePrefabForComponent<EnemyView>(_enemySettings.EnemyConfig.Prefab);
-            EnemyModel model = new EnemyModel(
-                _enemySettings.EnemyConfig.ReloadTime,
-                _enemySettings.EnemyConfig.Velocity,
-                _enemySettings.EnemyConfig.AggressionRadius,
-                _enemySettings.EnemyConfig.PatrolRadius,
-                _enemySettings.EnemyConfig.Health);
+            EnemyModel model = new EnemyModel(_enemySettings.EnemyConfig);
             EnemyController controller = new EnemyController(model, view);
 
-            _timeUpdate.RegisterUpdate(controller);
+            _timeUpdater.RegisterUpdate(controller);
 
             _healthBarManager.CreateHealthBar(model, controller);
 

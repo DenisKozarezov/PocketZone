@@ -28,7 +28,10 @@ namespace Core.Units.Enemy
             _stateMachine = new EnemyStateMachine(this, enemyModel);
         }
 
-        public void Attack() { }
+        public void Attack() 
+        {
+            
+        }
         public void Hit(int damage) => _model.Hit(damage);
         public void Taunt(IUnit unit)
         {

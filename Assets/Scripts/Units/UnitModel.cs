@@ -1,3 +1,4 @@
+using Core.Models.Units;
 using System;
 
 namespace Core.Units
@@ -5,16 +6,18 @@ namespace Core.Units
     public abstract class UnitModel
     {
         public readonly int MaxHealth;
+        public readonly float Velocity;
         public int Health;
         public bool Dead => Health == 0;
 
         public event Action<int, int> HealthChanged;
         public event Action Died;
 
-        public UnitModel(int health)
+        public UnitModel(UnitConfig config)
         {
-            Health = health;
-            MaxHealth = health;
+            Health = config.Health;
+            MaxHealth = config.Health;
+            Velocity = config.Velocity;
         }
 
         public void Hit(int damage)
