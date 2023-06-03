@@ -13,6 +13,7 @@ namespace Core.Units.Enemy
 
         public abstract void Enter();
         public abstract void Exit();
-        public abstract void Update();
+        public virtual void Update() { }
+        public virtual void FixedUpdate() { }
     }
 }

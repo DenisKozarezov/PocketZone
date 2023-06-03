@@ -15,9 +15,10 @@ MonoBehaviour:
   <DisplayName>k__BackingField: Zombie
   <Description>k__BackingField: 
   <Health>k__BackingField: 50
-  <Velocity>k__BackingField: 2
+  <Velocity>k__BackingField: 1
   <AttackRange>k__BackingField: 3
   <Prefab>k__BackingField: {fileID: 5878201393306676278, guid: 4e32d3acb90aca3408c21ec19fb4d7c0, type: 3}
+  <AttackRadius>k__BackingField: 1
   <AttackCooldown>k__BackingField: 2
   <AggressionRadius>k__BackingField: 3
   <PatrolRadius>k__BackingField: 3

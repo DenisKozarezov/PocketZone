@@ -41,6 +41,8 @@ namespace Core.Factories
 
             _timeUpdater.RegisterFixedUpdate(controller);
 
+            _container.BindInstance(controller);
+
             _healthBarManager.CreateHealthBar(model, controller);
             return controller;
         }

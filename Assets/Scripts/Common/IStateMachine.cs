@@ -5,6 +5,7 @@ namespace Core
         void Enter();
         void Exit();
         void Update();
+        void FixedUpdate();
     }
     public interface IStateMachine<T> where T : class
     {

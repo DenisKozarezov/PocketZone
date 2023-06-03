@@ -1,73 +1,66 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
-using Core.Models;
 using Core.Units.Enemy;
 using Core.UI;
 using Core.Services;
+using Core.Models.Units;
+using Core.Units.Player;
 
 namespace Core.Factories
 {
-    public class EnemyFactory : IEnemyFactory, IDisposable
+    public class EnemyFactory : IEnemyFactory, ITickable
     {
         private readonly DiContainer _container;
-        private readonly EnemySettings _enemySettings;
-        private readonly Queue<EnemyController> _pool;
+        private readonly EnemyConfig _config;
         private readonly HealthBarManager _healthBarManager;
         private readonly TimeUpdateService _timeUpdater;
-        public bool Empty => _pool.Count == 0;
+        private readonly LazyInject<PlayerController> _player;
+
+        private readonly LinkedList<EnemyController> _enemies = new();
 
         public EnemyFactory(
             DiContainer container,
-            EnemySettings enemySettings, 
+            EnemyConfig config,
             HealthBarManager healthBarManager,
-            TimeUpdateService timeUpdate)
+            TimeUpdateService timeUpdate,
+            LazyInject<PlayerController> player)
         {
             _container = container;
-            _enemySettings = enemySettings;
-            _pool = new Queue<EnemyController>(enemySettings.EnemiesLimit);
+            _config = config;
             _healthBarManager = healthBarManager;
             _timeUpdater = timeUpdate;
-
-            for (int i = 0; i < enemySettings.EnemiesLimit; i++) Create();
+            _player = player;
+            _timeUpdater.RegisterUpdate(this);
         }
-        private EnemyController Create()
+        private bool HasNearbyEnemy(ITransformable patrollingEnemy, float distance)
         {
-            EnemyView view = _container.InstantiatePrefabForComponent<EnemyView>(_enemySettings.EnemyConfig.Prefab);
-            EnemyModel model = new EnemyModel(_enemySettings.EnemyConfig);
-            EnemyController controller = new EnemyController(model, view);
-
-            _timeUpdater.RegisterUpdate(controller);
-
-            _healthBarManager.CreateHealthBar(model, controller);
-
-            view.SetActive(false);
-
-            _pool.Enqueue(controller);
-            return controller;
+            return (patrollingEnemy.Position - _player.Value.Transformable.Position).sqrMagnitude <= distance * distance;
         }
         public EnemyController Spawn(Vector2 position)
         {
-            if (_pool.TryDequeue(out EnemyController enemy))
-            {
-                (enemy as IPoolable<Vector2>).OnSpawned(position);
-                return enemy;
-            }
-            else
-                return Create();
+            EnemyView view = _container.InstantiatePrefabForComponent<EnemyView>(_config.Prefab);
+            EnemyModel model = new EnemyModel(_config);
+            EnemyController controller = new EnemyController(model, view);
+            controller.OnSpawned(position);
+
+            _timeUpdater.RegisterUpdate(controller);
+            _timeUpdater.RegisterFixedUpdate(controller);
+
+            _healthBarManager.CreateHealthBar(model, controller);
+
+            _enemies.AddLast(controller);
+
+            return controller;
         }
-        public void Despawn(EnemyController enemy)
+        public void Tick()
         {
-            (enemy as IPoolable<Vector2>).OnDespawned();
-            _pool.Enqueue(enemy);
-        }
-        public void Dispose()
-        {
-            while (_pool.Count > 0)
+            foreach (EnemyController enemy in _enemies)
             {
-                EnemyController enemy = _pool.Dequeue();
-                enemy.Dispose();
+                if (!enemy.IsTaunted && HasNearbyEnemy(enemy.Transformable, _config.AggressionRadius))
+                {
+                    enemy.Taunt(_player.Value);
+                }
             }
         }
     }

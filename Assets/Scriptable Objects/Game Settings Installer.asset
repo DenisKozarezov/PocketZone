@@ -13,6 +13,4 @@ MonoBehaviour:
   m_Name: Game Settings Installer
   m_EditorClassIdentifier: 
   _playerSettings: {fileID: 11400000, guid: 796c73673f22af5489571304bc1116c7, type: 2}
-  _enemySettings:
-    EnemyConfig: {fileID: 11400000, guid: 931dbde634168594ca36d78a65c42182, type: 2}
-    EnemiesLimit: 3
+  _enemyConfig: {fileID: 11400000, guid: 931dbde634168594ca36d78a65c42182, type: 2}

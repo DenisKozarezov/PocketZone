@@ -4,7 +4,7 @@ using Zenject;
 
 namespace Core.Units.Enemy
 {
-    public class EnemyController : IEnemy, IPoolable<Vector2>, ITickable, IDisposable
+    public class EnemyController : IEnemy, ITickable, IFixedTickable, IDisposable
     {
         private readonly EnemyModel _model;
         private readonly EnemyView _view;
@@ -36,27 +36,28 @@ namespace Core.Units.Enemy
         public void Taunt(IUnit unit)
         {
             Target = unit;
-            _stateMachine.SwitchState<EnemyAttackState>();
+            _stateMachine.SwitchState<EnemyChasingState>();
         }
         public void Dispose()
         {
-            Disposed?.Invoke(this);
+            _model.Died -= Dispose;
+            Target = null;
         }
-        public void Tick()
+        public void FixedTick()
         {
             if (_model.Dead) 
                 return;
 
+            _stateMachine.CurrentState.FixedUpdate();
+        }
+        public void Tick()
+        {
+            if (_model.Dead)
+                return;
+
             _stateMachine.CurrentState.Update();
         }
-
-        void IPoolable<Vector2>.OnDespawned()
-        {
-            _model.Died -= Dispose;
-            _view.SetActive(false);
-            Target = null;
-        }
-        void IPoolable<Vector2>.OnSpawned(Vector2 position)
+        public void OnSpawned(Vector2 position)
         {
             _model.Reset();
             _model.Died += Dispose;

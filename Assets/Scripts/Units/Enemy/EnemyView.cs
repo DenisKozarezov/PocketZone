@@ -13,7 +13,7 @@ namespace Core.Units.Enemy
 
         public void Translate(Vector2 worldDirection, float movementSpeed)
         {
-            Vector2 velocity = worldDirection * movementSpeed * Time.deltaTime;
+            Vector2 velocity = worldDirection * movementSpeed * Time.fixedDeltaTime;
             _rigidbody.MovePosition(_rigidbody.position + velocity);
         }
         public void SetPosition(Vector2 worldPosition)

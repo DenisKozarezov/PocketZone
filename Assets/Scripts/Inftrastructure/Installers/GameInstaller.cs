@@ -27,7 +27,7 @@ namespace Core.Infrastructure.Installers
         private void BindFactories()
         {
             Container.Bind<IPlayerFactory>().To<PlayerFactory>().AsSingle();
-            Container.BindInterfacesAndSelfTo<EnemyFactory>().AsSingle();
+            Container.Bind<IEnemyFactory>().To<EnemyFactory>().AsSingle();
         }
     }
 }
