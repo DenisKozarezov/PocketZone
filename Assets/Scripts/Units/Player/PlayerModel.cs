@@ -1,36 +1,17 @@
-﻿using System;
-using Core.Models;
+﻿using Core.Models;
 using Core.Services.Input;
 
 namespace Core.Units.Player
 {
-    public class PlayerModel
+    public class PlayerModel : UnitModel
     {
         public readonly PlayerConfig Config;
         public readonly IInputService InputService;
-        public int Health;
-        public bool Dead => Health == 0;
 
-        public event Action Died;
-
-        public PlayerModel(PlayerConfig config, IInputService inputService)
+        public PlayerModel(PlayerConfig config, IInputService inputService) : base(config.Health)
         {
             Config = config;
-            Health = config.Health;
             InputService = inputService;
-        }
-
-        public void Hit(int damage)
-        {
-            if (Dead) return;
-
-            if (Health - damage > 0) 
-                Health -= damage;
-            else
-            {
-                Health = 0;
-                Died?.Invoke();
-            }
-        }
+        }       
     }
 }

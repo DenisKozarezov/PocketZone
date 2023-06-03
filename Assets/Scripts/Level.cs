@@ -26,6 +26,7 @@ namespace Core
         private void SpawnPlayer()
         {
             PlayerController player = _playerFactory.Create(Vector3.zero);
+            player.Enable();
             _camera.Follow = player.Transformable.Transform;
         }
         private void SpawnEnemies()

@@ -4,17 +4,22 @@ using Zenject;
 
 namespace Core.Units.Enemy
 {
-    public class EnemyController : IUnit, IEnemy, IPoolable<Vector2>, IDisposable
+    public class EnemyController : IEnemy, IPoolable<Vector2>, ITickable, IDisposable
     {
         private readonly EnemyModel _model;
         private readonly EnemyView _view;
         private readonly EnemyStateMachine _stateMachine;
 
         public IUnit Target { get; private set; }
+        public bool Dead => _model.Dead;
         public bool IsTaunted => Target != null;
         public ITransformable Transformable => _view;
         public event Action<EnemyController> Disposed;
-        public event Action<IUnit> WeaponHit;
+        public event Action Died
+        {
+            add { _model.Died += value; }
+            remove { _model.Died -= value; }
+        }
 
         public EnemyController(EnemyModel enemyModel, EnemyView enemyView)
         {
@@ -23,16 +28,8 @@ namespace Core.Units.Enemy
             _stateMachine = new EnemyStateMachine(this, enemyModel);
         }
 
-        private void OnWeaponHit(IUnit target)
-        {
-            WeaponHit?.Invoke(target);
-        }
-
         public void Attack() { }
-        public void Hit(int damage)
-        {
-            if (!_model.IsDead) _model.Hit();
-        }
+        public void Hit(int damage) => _model.Hit(damage);
         public void Taunt(IUnit unit)
         {
             Target = unit;
@@ -42,9 +39,10 @@ namespace Core.Units.Enemy
         {
             Disposed?.Invoke(this);
         }
-        public void Update()
+        public void Tick()
         {
-            if (_model.IsDead) return;
+            if (_model.Dead) 
+                return;
 
             _stateMachine.CurrentState.Update();
         }

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Core.UI;
 
 namespace Core.Units.Player
 {
@@ -10,8 +11,8 @@ namespace Core.Units.Player
         private Transform _characterCenter;
         [SerializeField]
         private Transform _weaponHolder;
-
-        private Vector2 _animationBlend;
+        [SerializeField]
+        private AttackRangeCircle _attackRangeCircle;
 
         public Transform Transform => _characterCenter;
         public Vector2 Position => transform.position;
@@ -19,7 +20,8 @@ namespace Core.Units.Player
 
         public void Translate(Vector2 worldDirection, float movementSpeed)
         {
-            _rigidbody.velocity = worldDirection * movementSpeed;
+            Vector2 velocity = worldDirection * movementSpeed * Time.fixedDeltaTime;
+            _rigidbody.MovePosition(_rigidbody.position + velocity);
         }
         public void SetPosition(Vector2 worldPosition)
         {
@@ -33,17 +35,16 @@ namespace Core.Units.Player
             localScale.x = currentXScaleValue * (flipX ? 1f : -1f);
             transform.localScale = localScale;
         }
-        public void RotateWeapon(Quaternion rotation)
+        public void RotateWeapon(float angle)
         {
-            _weaponHolder.rotation = rotation;
-        }
-        public void SetRunningAnimation(bool isMoving, Vector2 inputDirection)
-        {
-            _animationBlend = Vector2.SmoothDamp(_animationBlend, inputDirection, ref _animationBlend, 0.05f);
-            _animationBlend = Vector2.ClampMagnitude(_animationBlend, 1f);
+            _attackRangeCircle.SetAngle(angle);
 
-            if (_animationBlend.sqrMagnitude <= 1E-02)
-                _animationBlend = Vector2.zero;
+            if (angle > 90f && angle < 180f)
+                angle = 180f + Mathf.Abs(angle);
+            else if (angle >= -180f && angle <= -90f)
+                angle = angle - 180f;
+
+            _weaponHolder.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         }
     }
 }

@@ -4,56 +4,55 @@ using Zenject;
 
 namespace Core.Units.Player
 {
-    public sealed class PlayerController : IUnit, ITickable, IDisposable
+    public sealed class PlayerController : IUnit, IFixedTickable
     {
         private readonly PlayerModel _model;
         private readonly PlayerView _view;
-        private bool _enabled = true;
 
+        public bool Dead => _model.Dead;
+        public event Action Died
+        {
+            add { _model.Died += value; }
+            remove { _model.Died -= value; }
+        }
         public ITransformable Transformable => _view;
 
         public PlayerController(PlayerModel model, PlayerView view)
         {
             _model = model;
             _view = view;
-            Enable();
         }
         private void ProcessMovementInput(Vector2 inputDirection)
         {
             _view.Translate(inputDirection, _model.Config.Velocity);
 
             float horizontal = inputDirection.x;
-            if (horizontal != 0f && _view.Rotation.eulerAngles.x != horizontal)
+            if (horizontal == 0f)
+                return;
+
+            if (_view.Rotation.eulerAngles.x != horizontal)
             {
                 _view.SetDirection(horizontal > 0f);
-            }
-
+            }            
 
             float angle = Mathf.Atan2(inputDirection.y, inputDirection.x) * Mathf.Rad2Deg;
-            angle += inputDirection.x >= 0f ? 0f : 180f;
-            Quaternion rotation = Quaternion.Euler(new Vector3(0f, 0f, angle));
-            _view.RotateWeapon(rotation);
+            _view.RotateWeapon(angle);
         }
         public void Enable()
         {
-            _enabled = true;
+            _model.InputService.Enable();
         }
         public void Disable()
         {
-            _enabled = false;
+            _model.InputService.Disable();
         }
-        public void Tick()
+        public void FixedTick()
         {
+            if (_model.Dead)
+                return;
+
             ProcessMovementInput(_model.InputService.Direction);
-            //_view.SetRunningAnimation(_model.InputService.IsMoving, _model.InputService.Direction);
         }
-        public void Dispose()
-        {
-            Disable();
-        }
-        public void Hit(int damage)
-        {
-            throw new NotImplementedException();
-        }
+        public void Hit(int damage) => _model.Hit(damage);
     }
 }

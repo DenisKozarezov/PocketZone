@@ -24,14 +24,6 @@ namespace Core.Units.Enemy
             direction = _destination - Transformable.Position;
             return (_destination - Transformable.Position).sqrMagnitude <= 1f;
         }
-        private void LookAtTarget(Vector2 direction)
-        {
-            //float angle = (Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg) - 90f;
-            //Quaternion targetRotation = Quaternion.AngleAxis(angle, Vector3.forward);
-            //Quaternion lerpRotation = Quaternion.Slerp(Transformable.Rotation, targetRotation, Time.deltaTime * _rotationSpeed);
-            //Transformable.Rotate(lerpRotation);
-        }
-
         public override void Enter()
         {
             _initPosition = Transformable.Position;
@@ -45,7 +37,7 @@ namespace Core.Units.Enemy
         {
             if (!HasReachedDestination(out Vector2 direction))
             {
-                LookAtTarget(direction);
+                Transformable.SetDirection(direction.x > 0f);
                 Transformable.Translate(direction.normalized, _velocity);
 
 #if UNITY_EDITOR

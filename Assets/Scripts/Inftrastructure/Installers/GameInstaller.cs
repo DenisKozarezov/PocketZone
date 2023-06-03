@@ -12,6 +12,8 @@ namespace Core.Infrastructure.Installers
         {
             Container.BindInterfacesAndSelfTo<Level>().AsSingle().NonLazy();
             Container.Bind<ICinemachineCamera>().To<CinemachineVirtualCamera>().FromComponentInHierarchy().AsSingle();
+            Container.Bind<HealthBarManager>().FromComponentInHierarchy().AsSingle();
+            Container.BindInterfacesAndSelfTo<TimeUpdateService>().AsSingle().NonLazy();
 
             BindFactories();
             BindInput();
@@ -23,8 +25,8 @@ namespace Core.Infrastructure.Installers
         }
         private void BindFactories()
         {
-            Container.BindInterfacesAndSelfTo<PlayerFactory>().AsSingle();
-            Container.Bind<IEnemyFactory>().To<EnemyFactory>().AsSingle();
+            Container.Bind<IPlayerFactory>().To<PlayerFactory>().AsSingle();
+            Container.BindInterfacesAndSelfTo<EnemyFactory>().AsSingle();
         }
     }
 }

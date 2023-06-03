@@ -1,6 +1,6 @@
 namespace Core.Units.Enemy
 {
-    public interface IEnemy
+    public interface IEnemy : IUnit
     {
         IUnit Target { get; }
         bool IsTaunted { get; }
