@@ -1,11 +1,12 @@
 using System;
-using Core.Units.Enemy;
+using Core.Units;
 
 namespace Core.Weapons
 {
     public interface IWeapon
     {
-        event Action<IEnemy> Hit;
+        event Action<IUnit> Hit;
+        void Reload();
         void Shoot();
     }
 }

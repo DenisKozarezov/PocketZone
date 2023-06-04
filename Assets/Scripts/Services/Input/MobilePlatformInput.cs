@@ -1,28 +1,32 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 using Core.UI;
-using Zenject;
 
 namespace Core.Services.Input
 {
-    public sealed class MobilePlatformInput : IInputService, IInitializable, IDisposable
+    public sealed class MobilePlatformInput : MonoBehaviour, IInputService
     {
-        private readonly PlayerControls _playerControls;
-        private readonly JoystickHandler _joystick;
+        [SerializeField]
+        private JoystickHandler _joystick;
+        [SerializeField]
+        private Button _fireButton;
+
         public bool IsMoving => _joystick.IsDragging;
         public Vector2 Direction => _joystick.Direction;
         public event Action Fire;
 
-        public MobilePlatformInput(JoystickHandler joystick)
+        private void Start() => Enable();
+        private void OnDisable() => Disable();
+        private void OnFire() => Fire?.Invoke();
+
+        public void Enable()
         {
-            _playerControls = new PlayerControls();
-            _joystick = joystick;
+            _fireButton.onClick.AddListener(OnFire);
         }
-
-        public void Disable() => _playerControls.Disable();
-        public void Enable() => _playerControls.Enable();
-
-        public void Initialize() => Enable();
-        public void Dispose() => Disable();
+        public void Disable()
+        {
+            _fireButton.onClick.RemoveListener(OnFire);
+        }
     }
 }

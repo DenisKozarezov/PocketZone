@@ -32,7 +32,7 @@ namespace Core
         {
             for (int i = 0; i < 3; i++)
             {
-                Vector2 position = Random.insideUnitCircle * 5f;
+                Vector2 position = Random.insideUnitCircle * 10f;
                 _enemyFactory.Spawn(position);
             }
         }

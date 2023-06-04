@@ -9,7 +9,6 @@ namespace Core.Units.Enemy
         private readonly EnemyModel _model;
         private readonly EnemyView _view;
         private readonly EnemyStateMachine _stateMachine;
-
         public IUnit Target { get; private set; }
         public bool Dead => _model.Dead;
         public bool IsTaunted => Target != null;

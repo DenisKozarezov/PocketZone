@@ -20,10 +20,6 @@ namespace Core.Units.Enemy
             direction = Context.Target.Transformable.Position - Transformable.Position;
             return direction.sqrMagnitude <= _attackRadius * _attackRadius;
         }
-        private void ChaseTarget(Vector2 direction)
-        {
-            Transformable.Translate(direction.normalized, _velocity);
-        }
         private void PeriodicAttack()
         {
             if (_timer <= _attackCooldown) _timer += Time.deltaTime;
@@ -44,7 +40,8 @@ namespace Core.Units.Enemy
         public override void FixedUpdate()
         {
             if (!IsCloseToTarget(out Vector2 direction))
-                ChaseTarget(direction);
+                StateMachine.SwitchState<EnemyChasingState>();
+
             Transformable.SetDirection(direction.x > 0f);
         }
         public override void Update()

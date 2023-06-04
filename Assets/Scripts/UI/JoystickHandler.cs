@@ -10,9 +10,8 @@ namespace Core.UI
         private RawImage _placeholder;
         [SerializeReference]
         private RawImage _handle;
-        [SerializeField, Range(0f, 100f)]
-        private float _moveRadius;
 
+        private float _moveRadius;
         private Vector2 _startPos;
 
         public Vector2 Direction { get; private set; }
@@ -21,6 +20,7 @@ namespace Core.UI
         private void Start()
         {
             _startPos = _handle.rectTransform.position;
+            _moveRadius = Screen.height * 0.1f;
         }
 
         public void OnBeginDrag(PointerEventData eventData)

@@ -17,4 +17,7 @@ MonoBehaviour:
   <Icon>k__BackingField: {fileID: 21300000, guid: 6532bc2c52f179142a7333cc0f5faeda, type: 3}
   <ReloadTime>k__BackingField: 1.7
   <Ammo>k__BackingField: 24
+  <BulletForce>k__BackingField: 3
+  <BulletLifetime>k__BackingField: 1
   <BulletDamage>k__BackingField: 17
+  <BulletSpawnInterval>k__BackingField: 0.1
