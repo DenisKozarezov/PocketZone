@@ -1,4 +1,3 @@
-using System;
 using Core.Factories;
 using Core.Units;
 
@@ -9,8 +8,6 @@ namespace Core.Weapons
         private readonly BulletGunModel _model;
         private readonly IBulletFactory _bulletFactory;
         //private readonly Explosion.Factory _explosionFactory;
-
-        public event Action<IUnit> Hit;
 
         public BulletGun(BulletGunModel model, IBulletFactory bulletFactory/*, Explosion.Factory explosionFactory*/)
         {
@@ -57,9 +54,9 @@ namespace Core.Weapons
         }
         private void OnBulletHit(Bullet bullet, IUnit unit)
         {
+            unit.Hit(_model.Config.BulletDamage);
             //CreateExplosion(bullet.transform.position);
             bullet.Dispose();
-            Hit?.Invoke(unit);
         }
     }
 }

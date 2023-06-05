@@ -11,6 +11,7 @@ namespace Core.Units.Enemy
         public Vector2 Position => transform.position;
         public Quaternion Rotation => transform.rotation;
 
+        public void Dispose() => Destroy(gameObject);
         public void Translate(Vector2 worldDirection, float movementSpeed)
         {
             Vector2 velocity = worldDirection * movementSpeed * Time.fixedDeltaTime;

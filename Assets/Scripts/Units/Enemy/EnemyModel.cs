@@ -11,7 +11,7 @@ namespace Core.Units.Enemy
 
         public EnemyModel(EnemyConfig config) : base(config)
         {
-            AttackRadius = config.AttackRadius;
+            AttackRadius = config.AttackRange;
             AttackCooldown = config.AttackCooldown;
             AggressionRadius = config.AggressionRadius;
             PatrolRadius = config.PatrolRadius;

@@ -3,7 +3,6 @@ using System.Collections;
 using UnityEngine;
 using Zenject;
 using Core.Units;
-using static UnityEngine.RuleTile.TilingRuleOutput;
 
 namespace Core.Weapons
 {
@@ -25,10 +24,10 @@ namespace Core.Weapons
         }
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            //if (collision.TryGetComponent(out ContactCollider collider))
-            //{
-            //    Hit?.Invoke(this, collider.Owner);
-            //}
+            if (collision.TryGetComponent(out DamageReceiver collider))
+            {
+                Hit?.Invoke(this, collider.Owner);
+            }
         }
         public void Dispose()
         {

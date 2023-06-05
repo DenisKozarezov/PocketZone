@@ -3,7 +3,7 @@ using Core.Models.Units;
 
 namespace Core.Models
 {
-    [CreateAssetMenu(menuName = "Configuration/Player Config")]
+    [CreateAssetMenu(menuName = "Configuration/Units/Player Config")]
     public sealed class PlayerConfig : UnitConfig
     {
         [field: Header("Player Characteristics")]

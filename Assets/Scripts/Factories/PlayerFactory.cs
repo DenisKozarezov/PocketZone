@@ -5,6 +5,7 @@ using Core.Models;
 using Core.UI;
 using Core.Weapons;
 using Core.Services;
+using Core.Units;
 
 namespace Core.Factories
 {
@@ -34,6 +35,8 @@ namespace Core.Factories
 
             PlayerController controller = new PlayerController(model, view);
             controller.Transformable.SetPosition(position);
+
+            view.GetComponent<DamageReceiver>().Init(controller);
 
             BulletGunModel bulletGunModel = new BulletGunModel(_config.PrimaryWeapon, view.FirePoint);
             BulletGun bulletGun = _container.Instantiate<BulletGun>(new object[] { bulletGunModel });

@@ -8,6 +8,7 @@ namespace Core.Models.Items
         [field: Header("Settings")]
         [field: SerializeField] public string DisplayName { get; private set; }
         [field: SerializeField, TextArea] public string Description { get; private set; }
+        [field: SerializeField] public Sprite Icon { get; private set; }
 
         public bool Equals(ItemConfig other)
         {

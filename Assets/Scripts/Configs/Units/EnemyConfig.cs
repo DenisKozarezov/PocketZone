@@ -16,7 +16,6 @@ namespace Core.Models.Units
     public class EnemyConfig : UnitConfig
     {
         [field: Header("Enemy Characteristics")]
-        [field: SerializeField, Min(0f)] public float AttackRadius { get; private set; }
         [field: SerializeField, Min(0f)] public float AttackCooldown { get; private set; }
         [field: SerializeField, Min(0f)] public float AggressionRadius { get; private set; }
         [field: SerializeField, Min(0f)] public float PatrolRadius { get; private set; }

@@ -39,8 +39,10 @@ namespace Core.Units.Enemy
         }
         public void Dispose()
         {
+            _view.Dispose();
             _model.Died -= Dispose;
             Target = null;
+            Disposed?.Invoke(this);
         }
         public void FixedTick()
         {
@@ -61,7 +63,6 @@ namespace Core.Units.Enemy
             _model.Reset();
             _model.Died += Dispose;
             _view.SetPosition(position);
-            _view.SetActive(true);
             _stateMachine.SwitchState<EnemyPatrolState>();
         }
     }

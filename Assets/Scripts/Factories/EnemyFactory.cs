@@ -6,6 +6,7 @@ using Core.UI;
 using Core.Services;
 using Core.Models.Units;
 using Core.Units.Player;
+using Core.Units;
 
 namespace Core.Factories
 {
@@ -37,11 +38,22 @@ namespace Core.Factories
         {
             return (patrollingEnemy.Position - _player.Value.Transformable.Position).sqrMagnitude <= distance * distance;
         }
+        private void OnEnemyDisposed(EnemyController enemy)
+        {
+            _timeUpdater.UnregisterUpdate(enemy);
+            _timeUpdater.UnregisterFixedUpdate(enemy);
+            enemy.Disposed -= OnEnemyDisposed;
+            _enemies.Remove(enemy);
+        }
         public EnemyController Spawn(Vector2 position)
         {
             EnemyView view = _container.InstantiatePrefabForComponent<EnemyView>(_config.Prefab);
             EnemyModel model = new EnemyModel(_config);
             EnemyController controller = new EnemyController(model, view);
+            controller.Disposed += OnEnemyDisposed;
+
+            view.GetComponent<DamageReceiver>().Init(controller);
+
             controller.OnSpawned(position);
 
             _timeUpdater.RegisterUpdate(controller);

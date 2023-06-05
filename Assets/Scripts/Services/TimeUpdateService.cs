@@ -16,7 +16,14 @@ namespace Core.Services
         {
             _updates.AddLast(obj);
         }
-
+        public void UnregisterFixedUpdate(IFixedTickable obj)
+        {
+            _fixedUpdates.Remove(obj);
+        }
+        public void UnregisterUpdate(ITickable obj)
+        {
+            _updates.Remove(obj);
+        }
         void IFixedTickable.FixedTick()
         {
             foreach (var obj in _fixedUpdates)
