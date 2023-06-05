@@ -29,10 +29,8 @@ namespace Core.Factories
         }
         public PlayerController Create(Vector3 position)
         {
-            GameObject obj = _container.InstantiatePrefab(_config.Prefab, position, Quaternion.identity, null);
-            PlayerView view = obj.GetComponent<PlayerView>();
+            PlayerView view = _container.InstantiatePrefabForComponent<PlayerView>(_config.Prefab, position, Quaternion.identity, null);
             PlayerModel model = _container.Instantiate<PlayerModel>(new object[] { _config });
-
             PlayerController controller = new PlayerController(model, view);
             controller.Transformable.SetPosition(position);
 

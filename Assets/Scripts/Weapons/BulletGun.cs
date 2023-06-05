@@ -1,4 +1,6 @@
+using UnityEngine;
 using Core.Factories;
+using Core.UI;
 using Core.Units;
 
 namespace Core.Weapons
@@ -7,13 +9,16 @@ namespace Core.Weapons
     {
         private readonly BulletGunModel _model;
         private readonly IBulletFactory _bulletFactory;
-        //private readonly Explosion.Factory _explosionFactory;
+        private readonly DamageVFXFactory _vfxFactory;
 
-        public BulletGun(BulletGunModel model, IBulletFactory bulletFactory/*, Explosion.Factory explosionFactory*/)
+        public BulletGun(
+            BulletGunModel model, 
+            IBulletFactory bulletFactory, 
+            DamageVFXFactory vfxFactory)
         {
             _model = model;
             _bulletFactory = bulletFactory;
-            //_explosionFactory = explosionFactory;
+            _vfxFactory = vfxFactory;
         }
         public void Reload()
         {
@@ -40,12 +45,16 @@ namespace Core.Weapons
             _model.Cooldown.Run(_model.Config.BulletSpawnInterval);
         }
 
-        //private void CreateExplosion(Vector2 position)
-        //{
-        //    Explosion explosion = _explosionFactory.Create();
-        //    explosion.transform.position = position;
-        //    explosion.Invoke(nameof(explosion.Dispose), 1.5f);
-        //}
+        private void CreateDamageVFX(Vector2 position, Vector2 direction)
+        {
+            var vfx = _vfxFactory.Create(
+                position,
+                direction,
+                $"-{_model.Config.BulletDamage}",
+                1.5f
+                );
+            vfx.Invoke(nameof(vfx.Dispose), 1.5f);
+        }
         private void OnDisposed(Bullet bullet)
         {
             bullet.LifetimeElapsed -= bullet.Dispose;
@@ -55,7 +64,7 @@ namespace Core.Weapons
         private void OnBulletHit(Bullet bullet, IUnit unit)
         {
             unit.Hit(_model.Config.BulletDamage);
-            //CreateExplosion(bullet.transform.position);
+            CreateDamageVFX(bullet.transform.position, bullet.transform.up);
             bullet.Dispose();
         }
     }

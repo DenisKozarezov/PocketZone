@@ -13,6 +13,8 @@ namespace Core.Infrastructure.Installers
     {
         [SerializeField]
         private GameObject _bulletPrefab;
+        [SerializeField]
+        private GameObject _labelVFXPrefab;
 
         public override void InstallBindings()
         {
@@ -36,6 +38,11 @@ namespace Core.Infrastructure.Installers
         {
             Container.Bind<IPlayerFactory>().To<PlayerFactory>().AsSingle();
             Container.Bind<IEnemyFactory>().To<EnemyFactory>().AsSingle();
+
+            Container.BindFactory<Vector2, Vector2, string, float, DamageVFX, DamageVFXFactory>().FromMonoPoolableMemoryPool(x => x
+               .WithInitialSize(10)
+               .FromComponentInNewPrefab(_labelVFXPrefab)
+               .UnderTransformGroup("UI VFX"));
 
             Container.BindFactoryCustomInterface<Vector2, Quaternion, float, float, Bullet, BulletFactory, IBulletFactory>()
                .FromMonoPoolableMemoryPool(x => x

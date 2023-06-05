@@ -921,7 +921,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -4048,6 +4048,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _bulletPrefab: {fileID: 756571621065287154, guid: 30b27cd8cc30d39478b636a7c04fe1ad, type: 3}
+  _labelVFXPrefab: {fileID: 8103535131709855190, guid: 623e646c4253d86428f29a4c801aa918, type: 3}
 --- !u!1 &1776543174
 GameObject:
   m_ObjectHideFlags: 0
@@ -7884,7 +7885,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1298141141
   m_SortingLayer: 2
-  m_SortingOrder: 46
+  m_SortingOrder: 45
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
@@ -9836,6 +9837,7 @@ GameObject:
   - component: {fileID: 1977217771}
   - component: {fileID: 1977217773}
   - component: {fileID: 1977217772}
+  - component: {fileID: 1977217774}
   m_Layer: 5
   m_Name: Ammo
   m_TagString: Untagged
@@ -9903,6 +9905,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1977217770}
   m_CullTransparentMesh: 1
+--- !u!114 &1977217774
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1977217770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c7ce6a0fe8e11a488771388e0701787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _text: {fileID: 401467357}
 --- !u!1 &2066835335
 GameObject:
   m_ObjectHideFlags: 0
