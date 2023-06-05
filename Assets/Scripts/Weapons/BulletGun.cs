@@ -1,6 +1,5 @@
 using UnityEngine;
 using Core.Factories;
-using Core.UI;
 using Core.Units;
 
 namespace Core.Weapons
@@ -37,9 +36,9 @@ namespace Core.Weapons
                 _model.Config.BulletLifetime
             );
 
-            bullet.LifetimeElapsed += bullet.Dispose;
             bullet.Hit += OnBulletHit;
             bullet.Disposed += OnDisposed;
+            bullet.Invoke(nameof(bullet.Dispose), _model.Config.BulletLifetime);
 
             _model.Shoot();
             _model.Cooldown.Run(_model.Config.BulletSpawnInterval);
@@ -47,17 +46,17 @@ namespace Core.Weapons
 
         private void CreateDamageVFX(Vector2 position, Vector2 direction)
         {
+            string text = $"-{_model.Config.BulletDamage}";
             var vfx = _vfxFactory.Create(
                 position,
                 direction,
-                $"-{_model.Config.BulletDamage}",
+                text,
                 1.5f
                 );
             vfx.Invoke(nameof(vfx.Dispose), 1.5f);
         }
         private void OnDisposed(Bullet bullet)
         {
-            bullet.LifetimeElapsed -= bullet.Dispose;
             bullet.Hit -= OnBulletHit;
             bullet.Disposed -= OnDisposed;
         }

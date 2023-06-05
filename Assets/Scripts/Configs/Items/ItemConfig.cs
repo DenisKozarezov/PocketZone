@@ -3,6 +3,13 @@ using UnityEngine;
 
 namespace Core.Models.Items
 {
+    [Serializable]
+    public struct ItemReward
+    {
+        public ItemConfig Item;
+        [Range(0f, 1f)] public float Probability;
+    }
+
     public abstract class ItemConfig : ScriptableObject, IEquatable<ItemConfig>
     {
         [field: Header("Settings")]

@@ -3,7 +3,7 @@ using Zenject;
 
 namespace Core.Services
 {
-    public class TimeUpdateService : IFixedTickable, ITickable
+    public class TimeUpdateService : ITimeUpdateService, IFixedTickable, ITickable
     {
         private readonly LinkedList<IFixedTickable> _fixedUpdates = new();
         private readonly LinkedList<ITickable> _updates = new();

@@ -6,6 +6,7 @@ using Core.Services;
 using Core.Services.Input;
 using Core.UI;
 using Core.Weapons;
+using Core.Services.Inventory;
 
 namespace Core.Infrastructure.Installers
 {
@@ -31,8 +32,9 @@ namespace Core.Infrastructure.Installers
         private void BindServices()
         {
             Container.Bind<ICinemachineCamera>().To<CinemachineVirtualCamera>().FromComponentInHierarchy().AsSingle();
+            Container.Bind<IInventoryService>().To<InventoryManager>().AsSingle();
             Container.Bind<HealthBarManager>().FromComponentInHierarchy().AsSingle();
-            Container.BindInterfacesAndSelfTo<TimeUpdateService>().AsSingle().NonLazy();
+            Container.BindInterfacesTo<TimeUpdateService>().AsSingle().NonLazy();
         }
         private void BindFactories()
         {

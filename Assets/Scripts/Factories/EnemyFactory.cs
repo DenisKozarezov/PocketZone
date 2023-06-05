@@ -7,6 +7,7 @@ using Core.Services;
 using Core.Models.Units;
 using Core.Units.Player;
 using Core.Units;
+using Core.Services.Inventory;
 
 namespace Core.Factories
 {
@@ -15,7 +16,8 @@ namespace Core.Factories
         private readonly DiContainer _container;
         private readonly EnemyConfig _config;
         private readonly HealthBarManager _healthBarManager;
-        private readonly TimeUpdateService _timeUpdater;
+        private readonly IInventoryService _inventory;
+        private readonly ITimeUpdateService _timeUpdater;
         private readonly LazyInject<PlayerController> _player;
 
         private readonly LinkedList<EnemyController> _enemies = new();
@@ -24,12 +26,14 @@ namespace Core.Factories
             DiContainer container,
             EnemyConfig config,
             HealthBarManager healthBarManager,
-            TimeUpdateService timeUpdate,
+            IInventoryService inventory,
+            ITimeUpdateService timeUpdate,
             LazyInject<PlayerController> player)
         {
             _container = container;
             _config = config;
             _healthBarManager = healthBarManager;
+            _inventory = inventory;
             _timeUpdater = timeUpdate;
             _player = player;
             _timeUpdater.RegisterUpdate(this);
@@ -44,6 +48,8 @@ namespace Core.Factories
             _timeUpdater.UnregisterFixedUpdate(enemy);
             enemy.Disposed -= OnEnemyDisposed;
             _enemies.Remove(enemy);
+
+            _inventory.DropRandomItem(enemy.Transformable.Position, _config.Reward);
         }
         public EnemyController Spawn(Vector2 position)
         {

@@ -19,10 +19,7 @@ namespace Core.UI
             _startColor = _text.color;
         }
 
-        public void Dispose()
-        {
-            _pool?.Despawn(this);
-        }
+        public void Dispose() => _pool?.Despawn(this);
         void IPoolable<Vector2, Vector2, string, float, IMemoryPool>.OnDespawned()
         {
             _pool = null;

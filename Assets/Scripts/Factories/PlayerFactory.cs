@@ -14,13 +14,13 @@ namespace Core.Factories
         private readonly DiContainer _container;
         private readonly PlayerConfig _config;
         private readonly HealthBarManager _healthBarManager;
-        private readonly TimeUpdateService _timeUpdater;
+        private readonly ITimeUpdateService _timeUpdater;
 
         public PlayerFactory(
             DiContainer container, 
             PlayerConfig config, 
             HealthBarManager healthBarManager,
-            TimeUpdateService timeUpdate)
+            ITimeUpdateService timeUpdate)
         {
             _container = container;
             _config = config;

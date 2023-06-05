@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using UnityEngine;
 using Zenject;
 using Core.Units;
@@ -12,9 +11,7 @@ namespace Core.Weapons
     {
         private IMemoryPool _pool;
         private float _bulletForce;
-        private Coroutine _lifetimeCoroutine;
 
-        public event Action LifetimeElapsed;
         public event Action<Bullet, IUnit> Hit;
         public event Action<Bullet> Disposed;
 
@@ -31,13 +28,8 @@ namespace Core.Weapons
         }
         public void Dispose()
         {
-            if (_lifetimeCoroutine != null)
-            {
-                StopCoroutine(_lifetimeCoroutine);
-                _lifetimeCoroutine = null;
-            }
-            Disposed?.Invoke(this);
             _pool?.Despawn(this);
+            Disposed?.Invoke(this);
         }
 
         void IPoolable<Vector2, Quaternion, float, float, IMemoryPool>.OnDespawned()
@@ -50,12 +42,6 @@ namespace Core.Weapons
             transform.position = position;
             transform.rotation = rotation;
             _bulletForce = force;
-            _lifetimeCoroutine = StartCoroutine(LifetimeCoroutine(lifetime));
-        }
-        private IEnumerator LifetimeCoroutine(float lifetime)
-        {
-            yield return new WaitForSeconds(lifetime);
-            LifetimeElapsed?.Invoke();
         }
     }
 }
