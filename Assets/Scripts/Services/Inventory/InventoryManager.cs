@@ -27,7 +27,7 @@ namespace Core.Services.Inventory
                     Stackable = item.Stackable,
                     Stacks = item.GetStacks()
                 };
-                _items.Add(item.DisplayName, newModel);
+                _items.TryAdd(item.DisplayName, newModel);
                 ItemCollected?.Invoke(newModel);
             }
             else
@@ -58,6 +58,14 @@ namespace Core.Services.Inventory
                     item.Collected += OnItemCollected;
                     break;
                 }
+            }
+        }
+        public void RemoveItem(InventoryItemModel removedItem)
+        {
+            if (_items.ContainsKey(removedItem.DisplayName))
+            {
+                _items.Remove(removedItem.DisplayName);
+                ItemRemoved?.Invoke(removedItem);
             }
         }
     }

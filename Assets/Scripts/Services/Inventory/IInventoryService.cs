@@ -11,5 +11,6 @@ namespace Core.Services.Inventory
         event Action<InventoryItemModel> ItemModified;
         event Action<InventoryItemModel> ItemRemoved;
         void DropRandomItem(Vector2 position, IEnumerable<ItemReward> items);
+        void RemoveItem(InventoryItemModel removedItem);
     }
 }

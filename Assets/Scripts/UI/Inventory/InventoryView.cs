@@ -26,7 +26,7 @@ namespace Core.UI
         private IInventoryService _inventory;
         private readonly int InventoryShown = Animator.StringToHash("InventoryShown");
 
-        private readonly Dictionary<InventoryItemModel, InventoryItemTemplate> _items = new();
+        private readonly Dictionary<string, InventoryItemTemplate> _items = new();
 
         [Inject]
         private void Construct(IInventoryService inventory)
@@ -41,6 +41,7 @@ namespace Core.UI
             _rightScroll.onClick.AddListener(OnRightScroll);
             _inventory.ItemCollected += AddItem;
             _inventory.ItemModified += ModifyItem;
+            _inventory.ItemRemoved += RemoveItem;
         }
         private void OnDestroy()
         {
@@ -49,6 +50,7 @@ namespace Core.UI
             _rightScroll.onClick.RemoveListener(OnRightScroll);
             _inventory.ItemCollected -= AddItem;
             _inventory.ItemModified -= ModifyItem;
+            _inventory.ItemRemoved -= RemoveItem;
         }
         private void OnLeftScroll()
         {
@@ -63,19 +65,26 @@ namespace Core.UI
             bool isShown = _animator.GetBool(InventoryShown);
             _animator.SetBool(InventoryShown, !isShown);
         }
-
         private void AddItem(InventoryItemModel item)
         {
             var obj = Instantiate(_itemTemplate, _templatesParent);
             var view = obj.GetComponent<InventoryItemTemplate>();
+            view.Removed += () => _inventory.RemoveItem(item);
             view.Init(item);
-            _items.Add(item, view);
+            _items.TryAdd(item.DisplayName, view);
         }
         private void ModifyItem(InventoryItemModel item)
         {
-            if (_items.TryGetValue(item, out var template))
+            if (_items.TryGetValue(item.DisplayName, out var template))
             {
                 template.SetStacks(item.Stacks);
+            }
+        }
+        private void RemoveItem(InventoryItemModel item)
+        {
+            if (_items.TryGetValue(item.DisplayName, out var template))
+            {
+                Destroy(template.gameObject);
             }
         }
     }
