@@ -2,10 +2,11 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Core.Models.Items;
+using Core.Services.Serialization;
 
 namespace Core.Services.Inventory
 {
-    public interface IInventoryService
+    public interface IInventoryService : ISerializableObject
     {
         event Action<InventoryItemModel> ItemCollected;
         event Action<InventoryItemModel> ItemModified;

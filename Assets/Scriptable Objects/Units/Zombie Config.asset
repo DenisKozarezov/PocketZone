@@ -18,7 +18,8 @@ MonoBehaviour:
   <Velocity>k__BackingField: 1
   <AttackRange>k__BackingField: 1.29
   <Prefab>k__BackingField: {fileID: 5878201393306676278, guid: 4e32d3acb90aca3408c21ec19fb4d7c0, type: 3}
-  <AttackCooldown>k__BackingField: 2
+  <AttackDamage>k__BackingField: 15
+  <AttackCooldown>k__BackingField: 1.4
   <AggressionRadius>k__BackingField: 3
   <PatrolRadius>k__BackingField: 3
   <Reward>k__BackingField:

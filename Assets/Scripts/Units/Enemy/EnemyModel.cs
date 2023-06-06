@@ -4,6 +4,7 @@ namespace Core.Units.Enemy
 {
     public class EnemyModel : UnitModel
     {
+        public readonly int Damage;
         public readonly float AttackRadius;
         public readonly float AttackCooldown;
         public readonly float AggressionRadius;
@@ -11,6 +12,7 @@ namespace Core.Units.Enemy
 
         public EnemyModel(EnemyConfig config) : base(config)
         {
+            Damage = config.AttackDamage;
             AttackRadius = config.AttackRange;
             AttackCooldown = config.AttackCooldown;
             AggressionRadius = config.AggressionRadius;

@@ -7,7 +7,7 @@ using Core.Services.Loading;
 
 namespace Core.UI
 {
-    public class MenuController : MonoBehaviour
+    public class MainMenu : MonoBehaviour
     {
         [SerializeField]
         private Button _startGameButton;

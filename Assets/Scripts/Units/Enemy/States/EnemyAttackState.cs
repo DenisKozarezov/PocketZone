@@ -4,14 +4,12 @@ namespace Core.Units.Enemy
 {
     public class EnemyAttackState : EnemyBaseState
     {
-        private readonly float _velocity;
         private readonly float _attackCooldown;
         private readonly float _attackRadius;
         private float _timer;
 
         public EnemyAttackState(IStateMachine<EnemyController> stateMachine, EnemyModel model) : base(stateMachine)
         {
-            _velocity = model.Velocity;
             _attackCooldown = model.AttackCooldown;
             _attackRadius = model.AttackRadius;
         }
@@ -37,15 +35,19 @@ namespace Core.Units.Enemy
         {
 
         }
-        public override void FixedUpdate()
-        {
-            if (!IsCloseToTarget(out Vector2 direction))
-                StateMachine.SwitchState<EnemyChasingState>();
-
-            Transformable.SetDirection(direction.x > 0f);
-        }
         public override void Update()
         {
+            if (Context.Target.Dead)
+            {
+                StateMachine.SwitchState<EnemyPatrolState>();
+            }
+
+            if (!IsCloseToTarget(out Vector2 direction))
+            {
+                StateMachine.SwitchState<EnemyChasingState>();
+            }
+
+            Transformable.SetDirection(direction.x > 0f);
             PeriodicAttack();
         }
     }

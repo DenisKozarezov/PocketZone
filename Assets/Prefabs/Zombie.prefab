@@ -350,7 +350,7 @@ GameObject:
   - component: {fileID: 8607069040362697885}
   - component: {fileID: 5656697937745764050}
   - component: {fileID: -7513942713481713593}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Zombie
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -417,7 +417,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
+  m_LinearDrag: 100000
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}

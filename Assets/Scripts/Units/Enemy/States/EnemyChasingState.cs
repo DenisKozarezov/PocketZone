@@ -28,6 +28,11 @@ namespace Core.Units.Enemy
         }
         public override void FixedUpdate()
         {
+            if (Context.Target.Dead)
+            {
+                StateMachine.SwitchState<EnemyPatrolState>();
+            }
+
             if (!HasReachedTarget(out Vector2 direction))
             {
                 Transformable.SetDirection(direction.x > 0f);

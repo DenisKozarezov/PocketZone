@@ -15,7 +15,6 @@ namespace Core.Factories
         private readonly PlayerConfig _config;
         private readonly HealthBarManager _healthBarManager;
         private readonly ITimeUpdateService _timeUpdater;
-
         public PlayerFactory(
             DiContainer container, 
             PlayerConfig config, 
@@ -32,6 +31,8 @@ namespace Core.Factories
             PlayerView view = _container.InstantiatePrefabForComponent<PlayerView>(_config.Prefab, position, Quaternion.identity, null);
             PlayerModel model = _container.Instantiate<PlayerModel>(new object[] { _config });
             PlayerController controller = new PlayerController(model, view);
+            
+            controller.Died += controller.Disable;
             controller.Transformable.SetPosition(position);
 
             view.GetComponent<DamageReceiver>().Init(controller);

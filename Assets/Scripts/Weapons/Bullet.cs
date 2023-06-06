@@ -1,8 +1,8 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using Zenject;
 using Core.Units;
-using System.Collections;
 
 namespace Core.Weapons
 {

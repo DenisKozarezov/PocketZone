@@ -2,10 +2,11 @@ using System;
 using UnityEngine;
 using Core.Weapons;
 using Zenject;
+using Core.Services.Serialization;
 
 namespace Core.Units.Player
 {
-    public sealed class PlayerController : IUnit, IFixedTickable
+    public sealed class PlayerController : IUnit, IFixedTickable, ISerializableObject
     {
         private readonly PlayerModel _model;
         private readonly PlayerView _view;
