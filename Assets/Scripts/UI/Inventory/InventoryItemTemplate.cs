@@ -34,11 +34,7 @@ namespace Core.UI
         public void Init(InventoryItemModel item)
         {
             _icon.sprite = item.Icon;
-
-            _stacksValue.gameObject.SetActive(item.Stackable);   
-            
-            if (item.Stackable)
-                SetStacks(item.Stacks);
+            SetStacks(item.Stacks);
         }
         public void SetStacks(int value)
         {

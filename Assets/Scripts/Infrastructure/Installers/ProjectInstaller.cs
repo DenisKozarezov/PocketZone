@@ -1,5 +1,6 @@
+using UnityEngine.EventSystems;
+using Core.Services.Loading;
 using Zenject;
-using Core.Services.Input;
 
 namespace Core.Infrastructure.Installers
 {
@@ -7,7 +8,8 @@ namespace Core.Infrastructure.Installers
     {
         public override void InstallBindings()
         {
-         
+            Container.Bind<ILoadingScreenProvider>().To<LoadingScreenProvider>().AsSingle().NonLazy();
+            Container.Bind<ICoroutineRunner>().To<AsyncProcessor>().FromNewComponentOnNewGameObject().AsSingle().NonLazy();
         }
     }
 }

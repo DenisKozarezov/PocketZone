@@ -18,7 +18,7 @@ namespace Core.Services.Inventory
 
         private void OnItemCollected(ItemConfig item)
         { 
-            if (!_items.ContainsKey(item.DisplayName))
+            if (!item.Stackable || !_items.ContainsKey(item.DisplayName))
             {
                 InventoryItemModel newModel = new InventoryItemModel
                 {
