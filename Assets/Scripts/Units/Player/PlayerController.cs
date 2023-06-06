@@ -1,6 +1,6 @@
-using Core.Weapons;
 using System;
 using UnityEngine;
+using Core.Weapons;
 using Zenject;
 
 namespace Core.Units.Player
@@ -11,12 +11,13 @@ namespace Core.Units.Player
         private readonly PlayerView _view;
 
         public bool Dead => _model.Dead;
+        public IWeapon PrimaryWeapon => _model.PrimaryWeapon;
+        public ITransformable Transformable => _view;
         public event Action Died
         {
             add { _model.Died += value; }
             remove { _model.Died -= value; }
         }
-        public ITransformable Transformable => _view;
 
         public PlayerController(PlayerModel model, PlayerView view)
         {

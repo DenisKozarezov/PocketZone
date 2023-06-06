@@ -16,7 +16,9 @@ namespace Core.Models.Items
         [field: SerializeField] public string DisplayName { get; private set; }
         [field: SerializeField, TextArea] public string Description { get; private set; }
         [field: SerializeField] public Sprite Icon { get; private set; }
+        [field: SerializeField] public bool Stackable { get; private set; } = true;
 
+        public virtual int GetStacks() => 1;
         public bool Equals(ItemConfig other)
         {
             if (other == null) return false;

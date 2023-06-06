@@ -32,7 +32,7 @@ namespace Core.Infrastructure.Installers
         private void BindServices()
         {
             Container.Bind<ICinemachineCamera>().To<CinemachineVirtualCamera>().FromComponentInHierarchy().AsSingle();
-            Container.Bind<IInventoryService>().To<InventoryManager>().AsSingle();
+            Container.Bind<IInventoryService>().To<InventoryManager>().FromComponentInHierarchy().AsSingle();
             Container.Bind<HealthBarManager>().FromComponentInHierarchy().AsSingle();
             Container.BindInterfacesTo<TimeUpdateService>().AsSingle().NonLazy();
         }

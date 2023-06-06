@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Core.Factories;
 using Core.Units;
@@ -9,6 +10,8 @@ namespace Core.Weapons
         private readonly BulletGunModel _model;
         private readonly IBulletFactory _bulletFactory;
         private readonly DamageVFXFactory _vfxFactory;
+
+        public event Action<int, int> AmmoChanged;
 
         public BulletGun(
             BulletGunModel model, 
@@ -36,27 +39,28 @@ namespace Core.Weapons
                 _model.Config.BulletLifetime
             );
 
+            bullet.LifetimeElapsed += bullet.Dispose;
             bullet.Hit += OnBulletHit;
             bullet.Disposed += OnDisposed;
-            bullet.Invoke(nameof(bullet.Dispose), _model.Config.BulletLifetime);
 
             _model.Shoot();
             _model.Cooldown.Run(_model.Config.BulletSpawnInterval);
+
+            AmmoChanged?.Invoke(_model.CurrentAmmo, _model.Config.Ammo);
         }
 
         private void CreateDamageVFX(Vector2 position, Vector2 direction)
         {
             string text = $"-{_model.Config.BulletDamage}";
-            var vfx = _vfxFactory.Create(
+            _vfxFactory.Create(
                 position,
                 direction,
                 text,
-                1.5f
-                );
-            vfx.Invoke(nameof(vfx.Dispose), 1.5f);
+                1.5f);
         }
         private void OnDisposed(Bullet bullet)
         {
+            bullet.LifetimeElapsed -= bullet.Dispose;
             bullet.Hit -= OnBulletHit;
             bullet.Disposed -= OnDisposed;
         }

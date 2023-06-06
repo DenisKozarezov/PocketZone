@@ -15,4 +15,5 @@ MonoBehaviour:
   <DisplayName>k__BackingField: 5.45x39 Ammo
   <Description>k__BackingField: 
   <Icon>k__BackingField: {fileID: 21300000, guid: d45f0cae013abb84688afe6e4bc52845, type: 3}
+  <Stackable>k__BackingField: 1
   <Charges>k__BackingField: 5

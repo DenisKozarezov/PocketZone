@@ -6,6 +6,8 @@ namespace Core.Models.Items
     public class ConsumableItem : ItemConfig
     {
         [field: Header("Item")]
-        [field: SerializeField] public byte Charges { get; private set; }
+        [field: SerializeField, Min(0)] public int Charges { get; private set; }
+
+        public override int GetStacks() => Charges;
     }
 }

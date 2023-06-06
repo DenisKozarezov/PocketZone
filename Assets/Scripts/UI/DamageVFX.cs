@@ -35,6 +35,8 @@ namespace Core.UI
             _text.DOFade(0f, lifetime)
                 .SetLink(gameObject)
                 .SetEase(Ease.Linear);
+
+            Invoke(nameof(Dispose), lifetime);
         }
     }
 }

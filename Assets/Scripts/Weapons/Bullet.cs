@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using Zenject;
 using Core.Units;
+using System.Collections;
 
 namespace Core.Weapons
 {
@@ -11,9 +12,11 @@ namespace Core.Weapons
     {
         private IMemoryPool _pool;
         private float _bulletForce;
+        private Coroutine _lifetimeCoroutine;
 
         public event Action<Bullet, IUnit> Hit;
         public event Action<Bullet> Disposed;
+        public event Action LifetimeElapsed;
 
         private void Update()
         {
@@ -26,8 +29,18 @@ namespace Core.Weapons
                 Hit?.Invoke(this, collider.Owner);
             }
         }
+        private IEnumerator LifetimeCoroutine(float lifetime)
+        {
+            yield return new WaitForSeconds(lifetime);
+            LifetimeElapsed?.Invoke();
+        }
         public void Dispose()
         {
+            if (_lifetimeCoroutine != null)
+            {
+                StopCoroutine(_lifetimeCoroutine);
+                _lifetimeCoroutine = null;
+            }
             _pool?.Despawn(this);
             Disposed?.Invoke(this);
         }
@@ -42,6 +55,7 @@ namespace Core.Weapons
             transform.position = position;
             transform.rotation = rotation;
             _bulletForce = force;
+            _lifetimeCoroutine = StartCoroutine(LifetimeCoroutine(lifetime));
         }
     }
 }
