@@ -1,6 +1,5 @@
 using System.IO;
 using Newtonsoft.Json.Linq;
-using UnityEditor;
 using Zenject;
 
 namespace Core.Services.Serialization
@@ -15,7 +14,7 @@ namespace Core.Services.Serialization
 #if UNITY_EDITOR
         private readonly string FilePath = "Assets\\PlayerData.json";
 #else
-        private readonly string FilePath = Path.Combine(Application.persistentDataPath, "PlayerData.json");
+        private readonly string FilePath = Path.Combine(UnityEngine.Application.persistentDataPath, "PlayerData.json");
 #endif
         public GameState(DiContainer container, ILocalStateSerializer serializer) 
         {
@@ -35,7 +34,7 @@ namespace Core.Services.Serialization
             _serializer.Serialize(FilePath, token);
 
 #if UNITY_EDITOR
-            AssetDatabase.Refresh();
+            UnityEditor.AssetDatabase.Refresh();
 #endif
         }
         public void Deserialize()

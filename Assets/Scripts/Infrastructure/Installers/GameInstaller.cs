@@ -23,7 +23,7 @@ namespace Core.Infrastructure.Installers
             BindInput();
             BindServices();
 
-            Container.BindInterfacesAndSelfTo<Level>().AsSingle().NonLazy();
+            Container.BindInterfacesTo<Level>().AsSingle().NonLazy();
         }
         private void BindInput()
         {
