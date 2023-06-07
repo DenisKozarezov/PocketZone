@@ -1,14 +1,11 @@
 ﻿using UnityEngine;
 using Core.Units.Player;
 using Zenject;
-using System;
 
 namespace Core.UI
 {
     public class HUD : MonoBehaviour
     {
-        [SerializeField]
-        private InventoryView _inventory;
         [SerializeField]
         private AmmoCounterView _ammoCounter;
         [SerializeField]
