@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 using Core.Services.Loading;
-using Core.Services.Serialization;
 
 namespace Core.UI
 {
@@ -20,15 +19,13 @@ namespace Core.UI
         private Button _pauseButton;
 
         private ILoadingScreenProvider _loadingScreenProvider;
-        private GameState _gameState;
 
         private readonly int ShownHash = Animator.StringToHash("Shown");
 
         [Inject]
-        private void Construct(ILoadingScreenProvider loadingScreenProvider, GameState gameState)
+        private void Construct(ILoadingScreenProvider loadingScreenProvider)
         {
             _loadingScreenProvider = loadingScreenProvider;
-            _gameState = gameState;
         }
 
         private void Awake()
@@ -50,8 +47,6 @@ namespace Core.UI
         }
         private void OnBackToMainMenu()
         {
-            _gameState.Serialize();
-
             Queue<LazyLoadingOperation> operations = new Queue<LazyLoadingOperation>();
             Func<ILoadingOperation> menuLoadingOperation = () => new SceneLoadingOperation(1);
             Func<ILoadingOperation> cleanupSceneOperation = () => new SceneCleanupOperation(2);

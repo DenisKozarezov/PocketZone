@@ -1,9 +1,9 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using Newtonsoft.Json.Linq;
 using Core.Models.Items;
-using System.Linq;
 
 namespace Core.Services.Inventory
 {
@@ -76,6 +76,19 @@ namespace Core.Services.Inventory
             JObject obj = new JObject();
             obj.Add("items", JToken.FromObject(_items.Values.Select(x => x.Serialize())));
             return obj;
+        }
+        public void Deserialize(JToken token)
+        {
+            var inventory = token[GetType().Name];
+            var deserializedItems = inventory["items"].ToObject<IEnumerable<JToken>>();
+            foreach (var json in deserializedItems) 
+            {
+                var item = new InventoryItemModel();
+                item.Deserialize(json);
+
+                _items.TryAdd(item.ID, item);
+                ItemCollected?.Invoke(item);
+            }
         }
     }
 }

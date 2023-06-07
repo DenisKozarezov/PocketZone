@@ -8,7 +8,7 @@ namespace Core.Services.Serialization
     public sealed class LocalJSONSerializer : ILocalStateSerializer
     {
         private object _lock = new object();
-        public JToken? Deserialize(string path)
+        public JToken Deserialize(string path)
         {
             if (!File.Exists(path))
                 return null;
@@ -38,7 +38,7 @@ namespace Core.Services.Serialization
         }
         public void Serialize(string path, JToken value)
         {
-            string json = value.ToString(Newtonsoft.Json.Formatting.Indented);
+            string json = value.ToString(Newtonsoft.Json.Formatting.None);
             lock (_lock)
             {
                 using (var file = File.Open(path, FileMode.OpenOrCreate, FileAccess.Write, FileShare.Write))

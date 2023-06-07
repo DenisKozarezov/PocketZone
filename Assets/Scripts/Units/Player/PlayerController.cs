@@ -85,12 +85,16 @@ namespace Core.Units.Player
         {
             JObject obj = new JObject();
             obj.Add("position", JToken.FromObject(Transformable.Position));
-            obj.Add("health", JToken.FromObject(_model.Health));
-            obj.Add("maxHealth", JToken.FromObject(_model.MaxHealth));
-            obj.Add("ammo", JToken.FromObject(_model.PrimaryWeapon.CurrentAmmo));
-            obj.Add("maxAmmo", JToken.FromObject(_model.PrimaryWeapon.MaxAmmo));
-            obj.Add("weaponId", JToken.FromObject(_model.PrimaryWeapon.ID));
+            obj.Add("model", _model.Serialize());
+            obj.Add("weapon", PrimaryWeapon.Serialize());
             return obj;
+        }
+        public void Deserialize(JToken token)
+        {
+            JToken player = token[GetType().Name];
+            _view.SetPosition(player["position"].ToObject<Vector2>());
+            _model.Deserialize(player["model"]);
+            _model.PrimaryWeapon.Deserialize(player["weapon"]);
         }
     }
 }

@@ -1,13 +1,34 @@
-using Core.Models.Units;
 using System;
+using Core.Models.Units;
+using Core.Services.Serialization;
+using Newtonsoft.Json.Linq;
 
 namespace Core.Units
 {
-    public abstract class UnitModel
+    public abstract class UnitModel : ISerializableObject
     {
-        public readonly int MaxHealth;
+        private int _health;
+        private int _maxHealth;
+
         public readonly float Velocity;
-        public int Health;
+        public int Health
+        {
+            get => _health;
+            private set
+            {
+                _health = Math.Clamp(value, 0, _maxHealth);
+                HealthChanged?.Invoke(_health, _maxHealth);
+            }
+        }
+        public int MaxHealth
+        {
+            get => _maxHealth;
+            private set
+            {
+                _maxHealth = value;
+                HealthChanged?.Invoke(_health, _maxHealth);
+            }
+        }
         public bool Dead => Health == 0;
 
         public event Action<int, int> HealthChanged;
@@ -15,8 +36,8 @@ namespace Core.Units
 
         public UnitModel(UnitConfig config)
         {
+            _maxHealth = config.Health;
             Health = config.Health;
-            MaxHealth = config.Health;
             Velocity = config.Velocity;
         }
 
@@ -28,7 +49,6 @@ namespace Core.Units
             if (Health - damage > 0)
             {
                 Health -= damage;
-                HealthChanged?.Invoke(Health, MaxHealth);
             }
             else
             {
@@ -39,11 +59,22 @@ namespace Core.Units
         public void Heal(int value)
         {
             Health = Math.Clamp(Health + value, 0, MaxHealth);
-            HealthChanged?.Invoke(Health, MaxHealth);
         }
         public void Reset()
         {
             Health = MaxHealth;
+        }
+        public JToken Serialize()
+        {
+            JObject obj = new JObject();
+            obj.Add("health", JToken.FromObject(Health));
+            obj.Add("maxHealth", JToken.FromObject(MaxHealth));
+            return obj;
+        }
+        public void Deserialize(JToken token)
+        {
+            Health = token["health"].Value<int>();
+            MaxHealth = token["maxHealth"].Value<int>();
         }
     }
 }

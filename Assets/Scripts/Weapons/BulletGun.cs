@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using Core.Factories;
 using Core.Units;
+using Newtonsoft.Json.Linq;
 
 namespace Core.Weapons
 {
@@ -72,6 +73,17 @@ namespace Core.Weapons
             unit.Hit(_model.Config.BulletDamage);
             CreateDamageVFX(bullet.transform.position, bullet.transform.up);
             bullet.Dispose();
+        }
+        public JToken Serialize()
+        {
+            JObject obj = new JObject();
+            obj.Add("id", JToken.FromObject(ID));
+            obj.Add("ammo", JToken.FromObject(CurrentAmmo));
+            return obj;
+        }
+        public void Deserialize(JToken token)
+        {
+            _model.CurrentAmmo = token["ammo"].Value<int>();
         }
     }
 }

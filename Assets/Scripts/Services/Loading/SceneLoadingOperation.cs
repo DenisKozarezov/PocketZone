@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine.SceneManagement;
-using Core.Services.Loading;
 
 namespace Core.Services.Loading
 {

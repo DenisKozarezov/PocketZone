@@ -1,8 +1,9 @@
 using System;
+using Core.Services.Serialization;
 
 namespace Core.Weapons
 {
-    public interface IWeapon
+    public interface IWeapon : ISerializableObject
     {
         int ID { get; }
         int CurrentAmmo { get; }

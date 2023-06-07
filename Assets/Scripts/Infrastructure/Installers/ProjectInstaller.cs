@@ -8,6 +8,7 @@ namespace Core.Infrastructure.Installers
     {
         public override void InstallBindings()
         {
+            Container.Bind<GameState>().AsSingle().MoveIntoAllSubContainers().NonLazy();
             Container.Bind<ILoadingScreenProvider>().To<LoadingScreenProvider>().AsSingle().NonLazy();
             Container.Bind<ILocalStateSerializer>().To<LocalJSONSerializer>().AsSingle().NonLazy();
             Container.Bind<ICoroutineRunner>().To<AsyncProcessor>().FromNewComponentOnNewGameObject().AsSingle().NonLazy();

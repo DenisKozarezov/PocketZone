@@ -1,4 +1,6 @@
+using System.IO;
 using Newtonsoft.Json.Linq;
+using UnityEditor;
 using Zenject;
 
 namespace Core.Services.Serialization
@@ -7,6 +9,8 @@ namespace Core.Services.Serialization
     {
         private readonly DiContainer _container;
         private readonly ILocalStateSerializer _serializer;
+
+        public static bool IsLoadingGame = false;
 
 #if UNITY_EDITOR
         private readonly string FilePath = "Assets\\PlayerData.json";
@@ -18,7 +22,7 @@ namespace Core.Services.Serialization
             _container = container;
             _serializer = serializer;
         }
-
+        public bool HasAnySave() => File.Exists(FilePath);
         public void Serialize()
         {
             JObject token = new JObject();
@@ -29,6 +33,21 @@ namespace Core.Services.Serialization
 
             _serializer.Clear(FilePath);
             _serializer.Serialize(FilePath, token);
+
+#if UNITY_EDITOR
+            AssetDatabase.Refresh();
+#endif
+        }
+        public void Deserialize()
+        {
+            JToken save = _serializer.Deserialize(FilePath);
+            if (save != null)
+            {
+                foreach (var obj in _container.ResolveAll<ISerializableObject>())
+                {
+                    obj.Deserialize(save);
+                }
+            }
         }
     }
 }

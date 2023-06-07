@@ -14,6 +14,6 @@ namespace Core.Units.Player
         {
             Config = config;
             InputService = inputService;
-        }       
+        }      
     }
 }

@@ -7,7 +7,6 @@ using Core.Services.Input;
 using Core.UI;
 using Core.Weapons;
 using Core.Services.Inventory;
-using Core.Services.Serialization;
 
 namespace Core.Infrastructure.Installers
 {
@@ -19,13 +18,12 @@ namespace Core.Infrastructure.Installers
         private GameObject _labelVFXPrefab;
 
         public override void InstallBindings()
-        {
-            Container.Bind<GameState>().AsSingle().NonLazy();
-            Container.BindInterfacesAndSelfTo<Level>().AsSingle().NonLazy();
-
+        {            
             BindFactories();
             BindInput();
             BindServices();
+
+            Container.BindInterfacesAndSelfTo<Level>().AsSingle().NonLazy();
         }
         private void BindInput()
         {
@@ -34,8 +32,8 @@ namespace Core.Infrastructure.Installers
         private void BindServices()
         {
             Container.Bind<ICinemachineCamera>().To<CinemachineVirtualCamera>().FromComponentInHierarchy().AsSingle();
-            Container.BindInterfacesTo<InventoryManager>().FromComponentInHierarchy().AsSingle();
             Container.Bind<HealthBarManager>().FromComponentInHierarchy().AsSingle();
+            Container.BindInterfacesTo<InventoryManager>().FromComponentInHierarchy().AsSingle();
             Container.BindInterfacesTo<TimeUpdateService>().AsSingle().NonLazy();
         }
         private void BindFactories()
