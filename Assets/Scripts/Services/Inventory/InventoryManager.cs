@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Newtonsoft.Json.Linq;
 using Core.Models.Items;
+using System.Linq;
 
 namespace Core.Services.Inventory
 {
@@ -10,7 +12,7 @@ namespace Core.Services.Inventory
         [SerializeField]
         private GameObject _itemPrefab;
 
-        private readonly Dictionary<string, InventoryItemModel> _items = new();
+        private readonly Dictionary<int, InventoryItemModel> _items = new();
 
         public event Action<InventoryItemModel> ItemCollected;
         public event Action<InventoryItemModel> ItemModified;
@@ -18,22 +20,23 @@ namespace Core.Services.Inventory
 
         private void OnItemCollected(ItemConfig item)
         { 
-            if (!item.Stackable || !_items.ContainsKey(item.DisplayName))
+            if (!item.Stackable || !_items.ContainsKey(item.ID))
             {
                 InventoryItemModel newModel = new InventoryItemModel
                 {
+                    ID = item.ID,
                     DisplayName = item.DisplayName,
                     Icon = item.Icon,
                     Stackable = item.Stackable,
                     Stacks = item.GetStacks()
                 };
-                _items.TryAdd(item.DisplayName, newModel);
+                _items.TryAdd(item.ID, newModel);
                 ItemCollected?.Invoke(newModel);
             }
             else
             {
-                _items[item.DisplayName].Stacks += item.GetStacks();
-                ItemModified?.Invoke(_items[item.DisplayName]);
+                _items[item.ID].Stacks += item.GetStacks();
+                ItemModified?.Invoke(_items[item.ID]);
             }
         }
         public void DropRandomItem(Vector2 position, IEnumerable<ItemReward> items)
@@ -62,11 +65,17 @@ namespace Core.Services.Inventory
         }
         public void RemoveItem(InventoryItemModel removedItem)
         {
-            if (_items.ContainsKey(removedItem.DisplayName))
+            if (_items.ContainsKey(removedItem.ID))
             {
-                _items.Remove(removedItem.DisplayName);
+                _items.Remove(removedItem.ID);
                 ItemRemoved?.Invoke(removedItem);
             }
+        }
+        public JToken Serialize()
+        {
+            JObject obj = new JObject();
+            obj.Add("items", JToken.FromObject(_items.Values.Select(x => x.Serialize())));
+            return obj;
         }
     }
 }

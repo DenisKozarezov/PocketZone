@@ -1,0 +1,35 @@
+{
+  "InventoryManager": {
+    "items": [
+      {
+        "id": 2,
+        "name": "Bulletproof Cloak",
+        "stackable": true,
+        "stacks": 1
+      },
+      {
+        "id": 0,
+        "name": "5.45x39 Ammo",
+        "stackable": true,
+        "stacks": 5
+      },
+      {
+        "id": 1,
+        "name": "Bandit Pants",
+        "stackable": true,
+        "stacks": 1
+      }
+    ]
+  },
+  "PlayerController": {
+    "position": {
+      "x": -6.33822346,
+      "y": -0.02027893
+    },
+    "health": 100,
+    "maxHealth": 100,
+    "ammo": 13,
+    "maxAmmo": 24,
+    "weaponId": 0
+  }
+}

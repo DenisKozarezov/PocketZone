@@ -6,6 +6,7 @@ namespace Core.Models
     public abstract class WeaponConfig : ScriptableObject, IEquatable<WeaponConfig>
     {
         [field: Header("Settings")]
+        [field: SerializeField, Min(0)] public int ID { get; private set; }
         [field: SerializeField] public string DisplayName { get; private set; }
         [field: SerializeField, TextArea] public string Description { get; private set; }
         [field: SerializeField] public Sprite Icon { get; private set; }

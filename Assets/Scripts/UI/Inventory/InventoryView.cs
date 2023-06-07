@@ -26,7 +26,7 @@ namespace Core.UI
         private IInventoryService _inventory;
         private readonly int InventoryShown = Animator.StringToHash("InventoryShown");
 
-        private readonly Dictionary<string, InventoryItemTemplate> _items = new();
+        private readonly Dictionary<int, InventoryItemTemplate> _items = new();
 
         [Inject]
         private void Construct(IInventoryService inventory)
@@ -71,18 +71,18 @@ namespace Core.UI
             var view = obj.GetComponent<InventoryItemTemplate>();
             view.Removed += () => _inventory.RemoveItem(item);
             view.Init(item);
-            _items.TryAdd(item.DisplayName, view);
+            _items.TryAdd(item.ID, view);
         }
         private void ModifyItem(InventoryItemModel item)
         {
-            if (_items.TryGetValue(item.DisplayName, out var template))
+            if (_items.TryGetValue(item.ID, out var template))
             {
                 template.SetStacks(item.Stacks);
             }
         }
         private void RemoveItem(InventoryItemModel item)
         {
-            if (_items.TryGetValue(item.DisplayName, out var template))
+            if (_items.TryGetValue(item.ID, out var template))
             {
                 Destroy(template.gameObject);
             }

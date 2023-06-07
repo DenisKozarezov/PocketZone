@@ -1,7 +1,8 @@
 using System;
 using UnityEngine;
-using Core.Weapons;
+using Newtonsoft.Json.Linq;
 using Zenject;
+using Core.Weapons;
 using Core.Services.Serialization;
 
 namespace Core.Units.Player
@@ -79,6 +80,17 @@ namespace Core.Units.Player
                 return;
 
             ProcessMovementInput(_model.InputService.Direction);
+        }
+        public JToken Serialize()
+        {
+            JObject obj = new JObject();
+            obj.Add("position", JToken.FromObject(Transformable.Position));
+            obj.Add("health", JToken.FromObject(_model.Health));
+            obj.Add("maxHealth", JToken.FromObject(_model.MaxHealth));
+            obj.Add("ammo", JToken.FromObject(_model.PrimaryWeapon.CurrentAmmo));
+            obj.Add("maxAmmo", JToken.FromObject(_model.PrimaryWeapon.MaxAmmo));
+            obj.Add("weaponId", JToken.FromObject(_model.PrimaryWeapon.ID));
+            return obj;
         }
     }
 }

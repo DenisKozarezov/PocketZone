@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5a5dd00567eda742b3cfc074ee87305, type: 3}
   m_Name: Bandit Pants
   m_EditorClassIdentifier: 
+  <ID>k__BackingField: 1
   <DisplayName>k__BackingField: Bandit Pants
   <Description>k__BackingField: 
   <Icon>k__BackingField: {fileID: 21300000, guid: 25c2a3f0b6bbd5e438f53bf9aa8b4c74, type: 3}

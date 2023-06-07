@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 using Zenject;
+using Core.Units;
 using Core.Units.Player;
 using Core.Models;
 using Core.UI;
 using Core.Weapons;
 using Core.Services;
-using Core.Units;
 
 namespace Core.Factories
 {
@@ -43,7 +43,7 @@ namespace Core.Factories
 
             _timeUpdater.RegisterFixedUpdate(controller);
 
-            _container.BindInstance(controller);
+            _container.BindInterfacesAndSelfTo<PlayerController>().FromInstance(controller);
 
             _healthBarManager.CreateHealthBar(model, controller);
             return controller;

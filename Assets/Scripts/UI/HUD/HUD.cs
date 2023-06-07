@@ -21,7 +21,10 @@ namespace Core.UI
 
         private void Start()
         {
-            _player.Value.PrimaryWeapon.AmmoChanged += _ammoCounter.SetAmmo;
+            var weapon = _player.Value.PrimaryWeapon;
+
+            _ammoCounter.SetAmmo(weapon.CurrentAmmo, weapon.MaxAmmo);
+            weapon.AmmoChanged += _ammoCounter.SetAmmo;
         }
         private void OnDestroy()
         {

@@ -1,6 +1,4 @@
-using System.Collections.Generic;
-using System.IO;
-using UnityEngine;
+using Newtonsoft.Json.Linq;
 using Zenject;
 
 namespace Core.Services.Serialization
@@ -10,8 +8,11 @@ namespace Core.Services.Serialization
         private readonly DiContainer _container;
         private readonly ILocalStateSerializer _serializer;
 
-        private readonly string FilePath = Application.persistentDataPath + Path.DirectorySeparatorChar + "PlayerData.json";
-
+#if UNITY_EDITOR
+        private readonly string FilePath = "Assets\\PlayerData.json";
+#else
+        private readonly string FilePath = Path.Combine(Application.persistentDataPath, "PlayerData.json");
+#endif
         public GameState(DiContainer container, ILocalStateSerializer serializer) 
         {
             _container = container;
@@ -20,16 +21,14 @@ namespace Core.Services.Serialization
 
         public void Serialize()
         {
-            var serializableObjects = _container.ResolveAll<ISerializableObject>();
-
-            Dictionary<string, object> jsonObject = new Dictionary<string, object>();
-            foreach (var obj in serializableObjects)
+            JObject token = new JObject();
+            foreach (var obj in _container.ResolveAll<ISerializableObject>())
             {
-                jsonObject.TryAdd(nameof(obj), obj);
+                token.Add(obj.GetType().Name, obj.Serialize());
             }
-            string json = JsonUtility.ToJson(jsonObject);
 
-            //_serializer.Serialize(FilePath, json);
+            _serializer.Clear(FilePath);
+            _serializer.Serialize(FilePath, token);
         }
     }
 }

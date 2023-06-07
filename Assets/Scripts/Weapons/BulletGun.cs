@@ -11,6 +11,9 @@ namespace Core.Weapons
         private readonly IBulletFactory _bulletFactory;
         private readonly DamageVFXFactory _vfxFactory;
 
+        public int ID => _model.Config.ID;
+        public int CurrentAmmo => _model.CurrentAmmo;
+        public int MaxAmmo => _model.Config.Ammo;
         public event Action<int, int> AmmoChanged;
 
         public BulletGun(
